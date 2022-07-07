@@ -27,6 +27,7 @@ public class Event {
     public Event() {
     }
 
+
     @Id
     public UUID getUuid() {
         return uuid;

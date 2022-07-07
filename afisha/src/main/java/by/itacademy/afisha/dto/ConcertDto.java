@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class ConcertDto {
-    private String uuid;
+    private UUID uuid;
     private LocalDateTime dtCreate;
     private LocalDateTime dtUpdate;
     private String title;
@@ -18,7 +18,22 @@ public class ConcertDto {
     private Status status;
     private UUID category;
 
-    public String getUuid() {
+    public ConcertDto(UUID uuid, LocalDateTime dtCreate, LocalDateTime dtUpdate,
+                      String title, String description, LocalDateTime dtEvent,
+                      LocalDateTime dtEndOfSale, Type type, Status status, UUID category) {
+        this.uuid = uuid;
+        this.dtCreate = dtCreate;
+        this.dtUpdate = dtUpdate;
+        this.title = title;
+        this.description = description;
+        this.dtEvent = dtEvent;
+        this.dtEndOfSale = dtEndOfSale;
+        this.type = type;
+        this.status = status;
+        this.category = category;
+    }
+
+    public UUID getUuid() {
         return uuid;
     }
 
@@ -58,7 +73,7 @@ public class ConcertDto {
         return category;
     }
 
-    public void setUuid(String uuid) {
+    public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
 
@@ -100,7 +115,7 @@ public class ConcertDto {
 
     public static final class Builder {
 
-        private String uuid;
+        private UUID uuid;
         private LocalDateTime dtCreate;
         private LocalDateTime dtUpdate;
         private String title;
@@ -113,6 +128,65 @@ public class ConcertDto {
 
         public Builder() {
         }
-        public static Builder 
+
+        public Builder setUuid(UUID uuid) {
+            this.uuid = uuid;
+            return this;
+        }
+
+        public Builder setDtCreate(LocalDateTime dtCreate) {
+            this.dtCreate = dtCreate;
+            return this;
+        }
+
+        public Builder setDtUpdate(LocalDateTime dtUpdate) {
+            this.dtUpdate = dtUpdate;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setDtEvent(LocalDateTime dtEvent) {
+            this.dtEvent = dtEvent;
+            return this;
+        }
+
+        public Builder setDtEndOfSale(LocalDateTime dtEndOfSale) {
+            this.dtEndOfSale = dtEndOfSale;
+            return this;
+        }
+
+        public Builder setType(Type type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder setStatus(Status status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder setCategory(UUID category) {
+            this.category = category;
+            return this;
+        }
+
+        public static Builder create(){
+            return new Builder();
+        }
+
+        public ConcertDto build(){
+            return new ConcertDto(uuid, dtCreate, dtUpdate,
+                    title, description, dtEvent,
+                    dtEndOfSale, type, status, category);
+        }
     }
 }
