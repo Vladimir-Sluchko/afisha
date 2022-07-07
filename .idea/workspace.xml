@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a26f31e2-00be-4fd2-aca1-25907eae18ad" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/controller/ControllerFilms.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/api/IEventFilmDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/Car.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/Concert.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/Country.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/Event.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/EventFilm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/Film.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/Vehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/enums/Status.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dao/entity/enums/Type.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dto/EventFilmDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/dto/Page.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/service/EventFilmService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/java/by/itacademy/afisha/service/api/IEventFilmService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/afisha/src/main/resources/application.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2BcDqjDshMmRxi7E9RBqrr6SQin" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/kristinaslucko/Documents/Java/Git/afisha&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a26f31e2-00be-4fd2-aca1-25907eae18ad" name="Changes" comment="" />
+      <created>1657196672768</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1657196672768</updated>
+      <workItem from="1657196674233" duration="68000" />
+      <workItem from="1657196758525" duration="10000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

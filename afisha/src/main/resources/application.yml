@@ -1,0 +1,19 @@
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    sql-format: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/afisha?eventFilmSchema=afisha_test
+    driver-class-name: org.postgresql.Driver
+server:
+  port: 80
