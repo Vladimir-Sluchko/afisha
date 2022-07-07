@@ -1,6 +1,6 @@
 package by.itacademy.afisha.service;
 
-import by.itacademy.afisha.dao.api.IEventFilmDao;
+import by.itacademy.afisha.dao.api.IFilmDao;
 import by.itacademy.afisha.dao.entity.Film;
 import by.itacademy.afisha.dto.FilmDto;
 import by.itacademy.afisha.service.api.IEventFilmService;
@@ -11,9 +11,9 @@ import java.util.UUID;
 
 @Service
 public class EventFilmService implements IEventFilmService {
-    private final IEventFilmDao eventFilmDao;
+    private final IFilmDao eventFilmDao;
 
-    public EventFilmService(IEventFilmDao eventFilmDao) {
+    public EventFilmService(IFilmDao eventFilmDao) {
         this.eventFilmDao = eventFilmDao;
     }
 
