@@ -6,10 +6,7 @@ import by.itacademy.afisha.dao.entity.enums.Type;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class FilmDto {
-    private String uuid;
-    private LocalDateTime dtCreate;
-    private LocalDateTime dtUpdate;
+public class FilmCreateDto {
     private String title;
     private String description;
     private LocalDateTime dtEvent;
@@ -21,15 +18,12 @@ public class FilmDto {
     private String releaseDate;
     private Integer duration;
 
-    public FilmDto(String uuid, LocalDateTime dtCreate,
-                   LocalDateTime dtUpdate, String title,
-                   String description, LocalDateTime dtEvent,
-                   LocalDateTime dtEndOfSale, Type type, Status status,
-                   UUID country, Integer releaseYear, String releaseDate,
-                   Integer duration) {
-        this.uuid = uuid;
-        this.dtCreate = dtCreate;
-        this.dtUpdate = dtUpdate;
+    public FilmCreateDto( String title,
+                         String description, LocalDateTime dtEvent,
+                         LocalDateTime dtEndOfSale, Type type, Status status,
+                         UUID country, Integer releaseYear, String releaseDate,
+                         Integer duration) {
+
         this.title = title;
         this.description = description;
         this.dtEvent = dtEvent;
@@ -40,30 +34,6 @@ public class FilmDto {
         this.releaseYear = releaseYear;
         this.releaseDate = releaseDate;
         this.duration = duration;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public LocalDateTime getDtCreate() {
-        return dtCreate;
-    }
-
-    public void setDtCreate(LocalDateTime dtCreate) {
-        this.dtCreate = dtCreate;
-    }
-
-    public LocalDateTime getDtUpdate() {
-        return dtUpdate;
-    }
-
-    public void setDtUpdate(LocalDateTime dtUpdate) {
-        this.dtUpdate = dtUpdate;
     }
 
     public String getTitle() {

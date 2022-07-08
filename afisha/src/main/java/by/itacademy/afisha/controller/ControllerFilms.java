@@ -1,13 +1,14 @@
 package by.itacademy.afisha.controller;
 
 import by.itacademy.afisha.dao.entity.Film;
-import by.itacademy.afisha.dto.FilmDto;
+import by.itacademy.afisha.dto.FilmCreateDto;
 import by.itacademy.afisha.service.api.IEventFilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.TimeZone;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/film")
@@ -23,12 +24,12 @@ public class ControllerFilms {
 
     @PostMapping
 //    @RequestMapping(method = RequestMethod.POST) //аналог @PostMapping
-    public ResponseEntity<Film> create(@RequestBody FilmDto dto){
+    public ResponseEntity<Film> create(@RequestBody FilmCreateDto dto){
         return new ResponseEntity<>(this.eventFilmService.create(dto), HttpStatus.CREATED);
     }
     @GetMapping("/{uuid}")
 //    @RequestMapping(value = "/{id}", method = RequestMethod.GET) //аналог @GetMapping
-    public Film get(@PathVariable String uuid){
+    public Film get(@PathVariable UUID uuid){
         return this.eventFilmService.get(uuid);
     }
 

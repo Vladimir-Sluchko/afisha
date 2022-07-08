@@ -2,25 +2,30 @@ package by.itacademy.afisha.service;
 
 import by.itacademy.afisha.dao.api.IFilmDao;
 import by.itacademy.afisha.dao.entity.Film;
-import by.itacademy.afisha.dto.FilmDto;
+import by.itacademy.afisha.dto.FilmCreateDto;
 import by.itacademy.afisha.service.api.IEventFilmService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
 public class EventFilmService implements IEventFilmService {
     private final IFilmDao eventFilmDao;
 
+
+    //private ModelMapper modelMapper;
+
     public EventFilmService(IFilmDao eventFilmDao) {
         this.eventFilmDao = eventFilmDao;
     }
 
     @Override
-    public Film create(FilmDto eventFilm) {
+    public Film create(FilmCreateDto eventFilm) {
         Film film = new Film();
-        film.setUuid(UUID.randomUUID());
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.map(eventFilm, Film.class);
+        /*film.setUuid(UUID.randomUUID());
         film.setDtCreate(LocalDateTime.now());
         film.setDtUpdate(LocalDateTime.now());
         film.setTitle(eventFilm.getTitle());
@@ -33,12 +38,12 @@ public class EventFilmService implements IEventFilmService {
         film.setReleaseYear(eventFilm.getReleaseYear());
         film.setReleaseDate(eventFilm.getReleaseDate());
         film.setDuration(eventFilm.getDuration());
-        film.setDuration(eventFilm.getDuration());
+        film.setDuration(eventFilm.getDuration());*/
         return this.eventFilmDao.save(film);
     }
 
     @Override
-    public Film get(String uuid) {
+    public Film get(UUID uuid) {
         if (uuid == null) {
             throw new IllegalArgumentException("This field cannot be null");
         }

@@ -2,8 +2,6 @@ package by.itacademy.afisha.dao.entity;
 
 import by.itacademy.afisha.dao.entity.enums.Status;
 import by.itacademy.afisha.dao.entity.enums.Type;
-import by.itacademy.afisha.dto.ConcertDto;
-import org.hibernate.cache.spi.CacheImplementor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

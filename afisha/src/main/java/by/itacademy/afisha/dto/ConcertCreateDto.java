@@ -6,10 +6,7 @@ import by.itacademy.afisha.dao.entity.enums.Type;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class ConcertDto {
-    private UUID uuid;
-    private LocalDateTime dtCreate;
-    private LocalDateTime dtUpdate;
+public class ConcertCreateDto {
     private String title;
     private String description;
     private LocalDateTime dtEvent;
@@ -18,12 +15,9 @@ public class ConcertDto {
     private Status status;
     private UUID category;
 
-    public ConcertDto(UUID uuid, LocalDateTime dtCreate, LocalDateTime dtUpdate,
-                      String title, String description, LocalDateTime dtEvent,
-                      LocalDateTime dtEndOfSale, Type type, Status status, UUID category) {
-        this.uuid = uuid;
-        this.dtCreate = dtCreate;
-        this.dtUpdate = dtUpdate;
+    public ConcertCreateDto(String title, String description, LocalDateTime dtEvent,
+                            LocalDateTime dtEndOfSale, Type type, Status status, UUID category) {
+
         this.title = title;
         this.description = description;
         this.dtEvent = dtEvent;
@@ -33,17 +27,6 @@ public class ConcertDto {
         this.category = category;
     }
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public LocalDateTime getDtCreate() {
-        return dtCreate;
-    }
-
-    public LocalDateTime getDtUpdate() {
-        return dtUpdate;
-    }
 
     public String getTitle() {
         return title;
@@ -71,18 +54,6 @@ public class ConcertDto {
 
     public UUID getCategory() {
         return category;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public void setDtCreate(LocalDateTime dtCreate) {
-        this.dtCreate = dtCreate;
-    }
-
-    public void setDtUpdate(LocalDateTime dtUpdate) {
-        this.dtUpdate = dtUpdate;
     }
 
     public void setTitle(String title) {
@@ -115,9 +86,6 @@ public class ConcertDto {
 
     public static final class Builder {
 
-        private UUID uuid;
-        private LocalDateTime dtCreate;
-        private LocalDateTime dtUpdate;
         private String title;
         private String description;
         private LocalDateTime dtEvent;
@@ -129,20 +97,6 @@ public class ConcertDto {
         public Builder() {
         }
 
-        public Builder setUuid(UUID uuid) {
-            this.uuid = uuid;
-            return this;
-        }
-
-        public Builder setDtCreate(LocalDateTime dtCreate) {
-            this.dtCreate = dtCreate;
-            return this;
-        }
-
-        public Builder setDtUpdate(LocalDateTime dtUpdate) {
-            this.dtUpdate = dtUpdate;
-            return this;
-        }
 
         public Builder setTitle(String title) {
             this.title = title;
@@ -183,10 +137,9 @@ public class ConcertDto {
             return new Builder();
         }
 
-        public ConcertDto build(){
-            return new ConcertDto(uuid, dtCreate, dtUpdate,
-                    title, description, dtEvent,
-                    dtEndOfSale, type, status, category);
+        public ConcertCreateDto build(){
+            return new ConcertCreateDto(title, description, dtEvent,
+                                      dtEndOfSale, type, status, category);
         }
     }
 }
