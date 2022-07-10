@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class Film extends Event{
     private UUID country;
     private Integer releaseYear;
-    private String releaseDate;
+    private LocalDate releaseDate;
     private Integer duration;
 
     public Film() {
@@ -34,7 +35,7 @@ public class Film extends Event{
     }
 
     @Column(table = "films")
-    public String getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
@@ -51,7 +52,7 @@ public class Film extends Event{
         this.releaseYear = releaseYear;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 

@@ -13,15 +13,18 @@ public class FilmReadDto {
     private LocalDateTime dtUpdate;
     private String title;
     private String description;
-    private LocalDateTime dtEvent;
-    private LocalDateTime dtEndOfSale;
+    private Long dtEvent;
+    private Long dtEndOfSale;
     private Type type;
     private Status status;
 
+    public FilmReadDto() {
+    }
+
     public FilmReadDto(String uuid, LocalDateTime dtCreate,
                        LocalDateTime dtUpdate, String title,
-                       String description, LocalDateTime dtEvent,
-                       LocalDateTime dtEndOfSale, Type type, Status status
+                       String description, Long dtEvent,
+                       Long dtEndOfSale, Type type, Status status
                        ) {
         this.uuid = uuid;
         this.dtCreate = dtCreate;
@@ -74,19 +77,19 @@ public class FilmReadDto {
         this.description = description;
     }
 
-    public LocalDateTime getDtEvent() {
+    public Long getDtEvent() {
         return dtEvent;
     }
 
-    public void setDtEvent(LocalDateTime dtEvent) {
+    public void setDtEvent(Long dtEvent) {
         this.dtEvent = dtEvent;
     }
 
-    public LocalDateTime getDtEndOfSale() {
+    public Long getDtEndOfSale() {
         return dtEndOfSale;
     }
 
-    public void setDtEndOfSale(LocalDateTime dtEndOfSale) {
+    public void setDtEndOfSale(Long dtEndOfSale) {
         this.dtEndOfSale = dtEndOfSale;
     }
 

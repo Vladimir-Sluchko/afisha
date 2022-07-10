@@ -34,8 +34,8 @@ public class Concert extends Event{
         private LocalDateTime dtUpdate;
         private String title;
         private String description;
-        private LocalDateTime dtEvent;
-        private LocalDateTime dtEndOfSale;
+        private Long dtEvent;
+        private Long dtEndOfSale;
         private Type type;
         private Status status;
         private UUID category;
@@ -68,12 +68,12 @@ public class Concert extends Event{
             return this;
         }
 
-        public Builder setDtEvent(LocalDateTime dtEvent) {
+        public Builder setDtEvent(Long dtEvent) {
             this.dtEvent = dtEvent;
             return this;
         }
 
-        public Builder setDtEndOfSale(LocalDateTime dtEndOfSale) {
+        public Builder setDtEndOfSale(Long dtEndOfSale) {
             this.dtEndOfSale = dtEndOfSale;
             return this;
         }

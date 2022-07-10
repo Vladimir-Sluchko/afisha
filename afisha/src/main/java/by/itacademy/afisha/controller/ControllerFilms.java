@@ -2,7 +2,8 @@ package by.itacademy.afisha.controller;
 
 import by.itacademy.afisha.dao.entity.Film;
 import by.itacademy.afisha.dto.FilmCreateDto;
-import by.itacademy.afisha.service.api.IEventFilmService;
+import by.itacademy.afisha.dto.FilmReadDto;
+import by.itacademy.afisha.service.api.IFilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,21 +17,22 @@ public class ControllerFilms {
     {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
-    private final IEventFilmService eventFilmService;
+    private final IFilmService eventFilmService;
 
-    public ControllerFilms(IEventFilmService eventFilmService) {
+    public ControllerFilms(IFilmService eventFilmService) {
         this.eventFilmService = eventFilmService;
     }
 
-    @PostMapping
+    @PostMapping("/{type}")
 //    @RequestMapping(method = RequestMethod.POST) //аналог @PostMapping
-    public ResponseEntity<Film> create(@RequestBody FilmCreateDto dto){
-        return new ResponseEntity<>(this.eventFilmService.create(dto), HttpStatus.CREATED);
+    public ResponseEntity<FilmCreateDto> create(@RequestBody FilmCreateDto dto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(eventFilmService.create(dto));
     }
-    @GetMapping("/{uuid}")
+
+    @GetMapping("/{type}/{uuid}")
 //    @RequestMapping(value = "/{id}", method = RequestMethod.GET) //аналог @GetMapping
-    public Film get(@PathVariable UUID uuid){
-        return this.eventFilmService.get(uuid);
+    public ResponseEntity<FilmReadDto> get(@PathVariable UUID uuid){
+        return ResponseEntity.ok(eventFilmService.get(uuid));
     }
 
 }

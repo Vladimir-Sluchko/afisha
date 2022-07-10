@@ -9,14 +9,14 @@ import java.util.UUID;
 public class ConcertCreateDto {
     private String title;
     private String description;
-    private LocalDateTime dtEvent;
-    private LocalDateTime dtEndOfSale;
+    private Long dtEvent;
+    private Long dtEndOfSale;
     private Type type;
     private Status status;
     private UUID category;
 
-    public ConcertCreateDto(String title, String description, LocalDateTime dtEvent,
-                            LocalDateTime dtEndOfSale, Type type, Status status, UUID category) {
+    public ConcertCreateDto(String title, String description, Long dtEvent,
+                            Long dtEndOfSale, Type type, Status status, UUID category) {
 
         this.title = title;
         this.description = description;
@@ -36,11 +36,11 @@ public class ConcertCreateDto {
         return description;
     }
 
-    public LocalDateTime getDtEvent() {
+    public Long getDtEvent() {
         return dtEvent;
     }
 
-    public LocalDateTime getDtEndOfSale() {
+    public Long getDtEndOfSale() {
         return dtEndOfSale;
     }
 
@@ -64,11 +64,11 @@ public class ConcertCreateDto {
         this.description = description;
     }
 
-    public void setDtEvent(LocalDateTime dtEvent) {
+    public void setDtEvent(Long dtEvent) {
         this.dtEvent = dtEvent;
     }
 
-    public void setDtEndOfSale(LocalDateTime dtEndOfSale) {
+    public void setDtEndOfSale(Long dtEndOfSale) {
         this.dtEndOfSale = dtEndOfSale;
     }
 
@@ -88,8 +88,8 @@ public class ConcertCreateDto {
 
         private String title;
         private String description;
-        private LocalDateTime dtEvent;
-        private LocalDateTime dtEndOfSale;
+        private Long dtEvent;
+        private Long dtEndOfSale;
         private Type type;
         private Status status;
         private UUID category;
@@ -108,12 +108,12 @@ public class ConcertCreateDto {
             return this;
         }
 
-        public Builder setDtEvent(LocalDateTime dtEvent) {
+        public Builder setDtEvent(Long dtEvent) {
             this.dtEvent = dtEvent;
             return this;
         }
 
-        public Builder setDtEndOfSale(LocalDateTime dtEndOfSale) {
+        public Builder setDtEndOfSale(Long dtEndOfSale) {
             this.dtEndOfSale = dtEndOfSale;
             return this;
         }

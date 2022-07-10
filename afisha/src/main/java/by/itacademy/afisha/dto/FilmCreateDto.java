@@ -3,25 +3,29 @@ package by.itacademy.afisha.dto;
 import by.itacademy.afisha.dao.entity.enums.Status;
 import by.itacademy.afisha.dao.entity.enums.Type;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class FilmCreateDto {
     private String title;
     private String description;
-    private LocalDateTime dtEvent;
-    private LocalDateTime dtEndOfSale;
+    private Long dtEvent;
+    private Long dtEndOfSale;
     private Type type;
     private Status status;
     private UUID country;
     private Integer releaseYear;
-    private String releaseDate;
+    private LocalDate releaseDate;
     private Integer duration;
 
-    public FilmCreateDto( String title,
-                         String description, LocalDateTime dtEvent,
-                         LocalDateTime dtEndOfSale, Type type, Status status,
-                         UUID country, Integer releaseYear, String releaseDate,
+    public FilmCreateDto() {
+    }
+
+    public FilmCreateDto(String title,
+                         String description, Long dtEvent,
+                         Long dtEndOfSale, Type type, Status status,
+                         UUID country, Integer releaseYear, LocalDate releaseDate,
                          Integer duration) {
 
         this.title = title;
@@ -52,19 +56,19 @@ public class FilmCreateDto {
         this.description = description;
     }
 
-    public LocalDateTime getDtEvent() {
+    public Long getDtEvent() {
         return dtEvent;
     }
 
-    public void setDtEvent(LocalDateTime dtEvent) {
+    public void setDtEvent(Long dtEvent) {
         this.dtEvent = dtEvent;
     }
 
-    public LocalDateTime getDtEndOfSale() {
+    public Long getDtEndOfSale() {
         return dtEndOfSale;
     }
 
-    public void setDtEndOfSale(LocalDateTime dtEndOfSale) {
+    public void setDtEndOfSale(Long dtEndOfSale) {
         this.dtEndOfSale = dtEndOfSale;
     }
 
@@ -100,11 +104,11 @@ public class FilmCreateDto {
         this.releaseYear = releaseYear;
     }
 
-    public String getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 

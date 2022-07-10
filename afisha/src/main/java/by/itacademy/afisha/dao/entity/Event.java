@@ -7,6 +7,7 @@ import by.itacademy.afisha.dao.entity.enums.Type;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.ReadOnlyProperty;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,8 +20,8 @@ public class Event {
     private LocalDateTime dtUpdate;
     private String title;
     private String description;
-    private LocalDateTime dtEvent;
-    private LocalDateTime dtEndOfSale;
+    private Long dtEvent;
+    private Long dtEndOfSale;
     private Type type;
     private Status status;
 
@@ -37,8 +38,9 @@ public class Event {
         return dtCreate;
     }
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    //@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    //@JsonSerialize(using = LocalDateTimeSerializer.class)
+    @Version
     public LocalDateTime getDtUpdate() {
         return dtUpdate;
     }
@@ -52,15 +54,15 @@ public class Event {
         return description;
     }
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    public LocalDateTime getDtEvent() {
+    //@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    //@JsonSerialize(using = LocalDateTimeSerializer.class)
+    public Long getDtEvent() {
         return dtEvent;
     }
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    public LocalDateTime getDtEndOfSale() {
+    //@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    //@JsonSerialize(using = LocalDateTimeSerializer.class)
+    public Long getDtEndOfSale() {
         return dtEndOfSale;
     }
 
@@ -78,8 +80,8 @@ public class Event {
         this.uuid = uuid;
     }
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    //@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    //@JsonSerialize(using = LocalDateTimeSerializer.class)
     public void setDtCreate(LocalDateTime dtCreate) {
         this.dtCreate = dtCreate;
     }
@@ -96,11 +98,11 @@ public class Event {
         this.description = description;
     }
 
-    public void setDtEvent(LocalDateTime dtEvent) {
+    public void setDtEvent(Long dtEvent) {
         this.dtEvent = dtEvent;
     }
 
-    public void setDtEndOfSale(LocalDateTime dtEndOfSale) {
+    public void setDtEndOfSale(Long dtEndOfSale) {
         this.dtEndOfSale = dtEndOfSale;
     }
 
