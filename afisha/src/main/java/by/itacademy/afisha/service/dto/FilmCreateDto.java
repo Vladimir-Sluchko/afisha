@@ -1,4 +1,4 @@
-package by.itacademy.afisha.dto;
+package by.itacademy.afisha.service.dto;
 
 import by.itacademy.afisha.dao.entity.enums.Status;
 import by.itacademy.afisha.dao.entity.enums.Type;
