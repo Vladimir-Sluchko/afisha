@@ -6,9 +6,9 @@ import by.itacademy.afisha.dao.entity.enums.Type;
 import by.itacademy.afisha.service.api.IConcertService;
 import by.itacademy.afisha.service.dto.ConcertCreateDto;
 import by.itacademy.afisha.service.dto.ConcertReadDto;
+import by.itacademy.afisha.service.dto.FilmReadDto;
 import by.itacademy.afisha.service.dto.PageDto;
-import by.itacademy.afisha.service.utils.mapper.EventConcertMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -21,25 +21,24 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class EventConcertService implements IConcertService {
-    private final IConcertDao eventConcertDao;
+    private final IConcertDao repository;
 
 
-    private final EventConcertMapper mapper;
+    private final ModelMapper mapper;
 
-    public EventConcertService(IConcertDao eventConcertDao, EventConcertMapper mapper) {
-        this.eventConcertDao = eventConcertDao;
+    public EventConcertService(IConcertDao repository, ModelMapper mapper) {
+        this.repository = repository;
         this.mapper = mapper;
     }
 
-
-
     @Override
     public ConcertCreateDto create(ConcertCreateDto eventConcert) {
-        Concert concert = mapper.fromDtoToEntityFilm(eventConcert);
-        eventConcertDao.save(concert);
+        Concert concert = mapper.map(eventConcert,Concert.class);
+        repository.save(concert);
         return eventConcert;
     }
 
@@ -48,30 +47,30 @@ public class EventConcertService implements IConcertService {
         if (uuid == null) {
             throw new IllegalArgumentException("This field cannot be null");
         }
-        Concert concert = eventConcertDao.findById(uuid).
+        Concert concert = repository.findById(uuid).
                 orElseThrow(()-> {
                     throw new IllegalArgumentException("Нет такого фильма");
                 });
-        return mapper.fromEntityToDto(concert);
+        return mapper.map(concert,ConcertReadDto.class);
     }
 
     @Override
     public PageDto<ConcertReadDto> getAll(int page, int size) {
-        //List<Concert> listEntity = eventConcertDao.findAll();
-        List<Concert> listEntity = eventConcertDao.findByType(Type.CONCERTS);
-        List<ConcertReadDto> listDto = mapper.mapList(listEntity,ConcertReadDto.class);
+        List<Concert> listEntity = repository.findByType(Type.CONCERTS);
+        List<ConcertReadDto> listDto = listEntity.stream()
+                .map(element -> mapper.map(element, ConcertReadDto.class))
+                .collect(Collectors.toList());
         Pageable pageRequest = PageRequest.of(--page,size);
-        //Page<Concert> entities = eventConcertDao.findAll(pageRequest);
-        Page<Concert> entities = eventConcertDao.findByType(Type.CONCERTS, pageRequest);
-        Page<ConcertReadDto> concertReadDto = new PageImpl<>(listDto, pageRequest, entities.getTotalElements());
-        PageDto<ConcertReadDto> concertReadDtoPageDto = mapper.fromPageToDto(concertReadDto);
-        return concertReadDtoPageDto;
+        Page<Concert> entities = repository.findByType(Type.CONCERTS, pageRequest);
+        Page<ConcertReadDto> pageConcert = new PageImpl<>(listDto, pageRequest, entities.getTotalElements());
+        PageDto<ConcertReadDto> pageDto = mapper.map(pageConcert,PageDto.class);
+        return pageDto;
     }
 
     @Override
     public ConcertCreateDto update(ConcertCreateDto eventConcert, UUID uuid, Long dtUpdate) {
         LocalDateTime dateUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
-        Concert concert = eventConcertDao.findById(uuid).orElseThrow(()-> {
+        Concert concert = repository.findById(uuid).orElseThrow(()-> {
             throw new IllegalArgumentException("Нет такого концерта");
         });
         if (concert.getDtUpdate().equals(dateUpdate)) {
@@ -82,7 +81,7 @@ public class EventConcertService implements IConcertService {
             concert.setType(eventConcert.getType());
             concert.setStatus(eventConcert.getStatus());
 
-            eventConcertDao.save(concert);
+            repository.save(concert);
         } else {
             throw new OptimisticLockException("Entity already updated");
         }

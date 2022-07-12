@@ -1,65 +1,64 @@
 package by.itacademy.afisha.service;
 
 import by.itacademy.afisha.dao.api.IFilmDao;
-import by.itacademy.afisha.dao.entity.Concert;
 import by.itacademy.afisha.dao.entity.Film;
 import by.itacademy.afisha.dao.entity.enums.Type;
 import by.itacademy.afisha.service.dto.FilmCreateDto;
 import by.itacademy.afisha.service.dto.FilmReadDto;
 import by.itacademy.afisha.service.api.IFilmService;
 import by.itacademy.afisha.service.dto.PageDto;
-import by.itacademy.afisha.service.utils.mapper.EventFilmMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Converter;
 import javax.persistence.OptimisticLockException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class EventFilmService implements IFilmService {
-    private final IFilmDao eventFilmDao;
+    private final IFilmDao repository;
 
 
-    private final EventFilmMapper mapper;
+    private final ModelMapper mapper;
 
     @Autowired
-    public EventFilmService(IFilmDao eventFilmDao, EventFilmMapper mapper) {
-        this.eventFilmDao = eventFilmDao;
+    public EventFilmService(IFilmDao eventFilmDao, ModelMapper mapper) {
+        this.repository = eventFilmDao;
         this.mapper = mapper;
     }
 
-
     @Override
     public FilmCreateDto create(FilmCreateDto eventFilm) {
-        Film film = mapper.fromDtoToEntityFilm(eventFilm);
-        eventFilmDao.save(film);
+        Film entity = mapper.map(eventFilm, Film.class);
+        entity.setUuid(UUID.randomUUID());
+        entity.setDtCreate(LocalDateTime.now());
+        entity.setDtUpdate(LocalDateTime.now());
+        repository.save(entity);
         return eventFilm;
     }
 
     @Override
     public PageDto<FilmReadDto> getAll(int page, int size ) {
-        //List<Film> listEntity = eventFilmDao.findAll();
-        List<Film> listEntity = eventFilmDao.findByType(Type.FILMS);
-        List<FilmReadDto> listDto = mapper.mapList(listEntity,FilmReadDto.class);
+        List<Film> listEntity = repository.findByType(Type.FILMS);
+        List<FilmReadDto> listDto = listEntity.stream()
+                .map(element -> mapper.map(element, FilmReadDto.class))
+                .collect(Collectors.toList());
         Pageable pageRequest = PageRequest.of(--page,size);
-        //Page<Film> entities = eventFilmDao.findAll(pageRequest);
-        Page<Film> entities = eventFilmDao.findByType(Type.FILMS,pageRequest);
+        Page<Film> entities = repository.findByType(Type.FILMS,pageRequest);
         Page<FilmReadDto> filmReadDto = new PageImpl<>(listDto, pageRequest, entities.getTotalElements());
-        PageDto<FilmReadDto> filmReadDtoPageDto = mapper.fromPageToDto(filmReadDto);
-        return filmReadDtoPageDto;
+        return mapper.map(filmReadDto, PageDto.class);
     }
 
     @Override
     public FilmCreateDto update(FilmCreateDto eventFilm, UUID uuid, Long dtUpdate) {
         LocalDateTime dateUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
-        Film film = eventFilmDao.findById(uuid).orElseThrow(()-> {
+        Film film = repository.findById(uuid).orElseThrow(()-> {
             throw new IllegalArgumentException("Нет такого фильма");
         });
         if (film.getDtUpdate().equals(dateUpdate)) {
@@ -73,8 +72,7 @@ public class EventFilmService implements IFilmService {
             film.setReleaseYear(eventFilm.getReleaseYear());
             film.setReleaseDate(eventFilm.getReleaseDate());
             film.setDuration(eventFilm.getDuration());
-            //film = mapper.fromDtoToEntityFilm(eventFilm);
-            eventFilmDao.save(film);
+            repository.save(film);
         } else {
             throw new OptimisticLockException("Entity already updated");
         }
@@ -87,11 +85,11 @@ public class EventFilmService implements IFilmService {
         if (uuid == null) {
             throw new IllegalArgumentException("This field cannot be null");
         }
-         Film film = eventFilmDao.findById(uuid).
+         Film film = repository.findById(uuid).
                  orElseThrow(()-> {
                      throw new IllegalArgumentException("Нет такого фильма");
                  });
-        return mapper.fromEntityToDto(film);
+        return mapper.map(film,FilmReadDto.class);
     }
 
 }
