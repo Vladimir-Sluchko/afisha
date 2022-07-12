@@ -1,19 +1,22 @@
-package by.itacademy.afisha.dao.entity.not;
+package by.itacademy.classifier_service.dao.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Entity
-@Table(name = "category", schema = "afisha_test")
-public class Category {
-    private static final long serialVersionUID = 1L;
-    private String uuid;
+@Table(name = "country", schema = "afisha_test")
+public class Country {
+
+    private UUID uuid;
     private LocalDateTime dtCreate;
     private LocalDateTime dtUpdate;
     private String title;
-
+    private String description;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
     @Column(name = "dt_create")
@@ -29,7 +32,11 @@ public class Category {
         return title;
     }
 
-    public void setUuid(String uuid) {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
 
@@ -43,5 +50,9 @@ public class Category {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

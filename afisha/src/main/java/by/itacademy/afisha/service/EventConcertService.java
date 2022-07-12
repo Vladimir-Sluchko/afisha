@@ -2,6 +2,7 @@ package by.itacademy.afisha.service;
 
 import by.itacademy.afisha.dao.api.IConcertDao;
 import by.itacademy.afisha.dao.entity.Concert;
+import by.itacademy.afisha.dao.entity.enums.Type;
 import by.itacademy.afisha.service.api.IConcertService;
 import by.itacademy.afisha.service.dto.ConcertCreateDto;
 import by.itacademy.afisha.service.dto.ConcertReadDto;
@@ -56,10 +57,12 @@ public class EventConcertService implements IConcertService {
 
     @Override
     public PageDto<ConcertReadDto> getAll(int page, int size) {
-        List<Concert> listEntity = eventConcertDao.findAll();
+        //List<Concert> listEntity = eventConcertDao.findAll();
+        List<Concert> listEntity = eventConcertDao.findByType(Type.CONCERTS);
         List<ConcertReadDto> listDto = mapper.mapList(listEntity,ConcertReadDto.class);
         Pageable pageRequest = PageRequest.of(--page,size);
-        Page<Concert> entities = eventConcertDao.findAll(pageRequest);
+        //Page<Concert> entities = eventConcertDao.findAll(pageRequest);
+        Page<Concert> entities = eventConcertDao.findByType(Type.CONCERTS, pageRequest);
         Page<ConcertReadDto> concertReadDto = new PageImpl<>(listDto, pageRequest, entities.getTotalElements());
         PageDto<ConcertReadDto> concertReadDtoPageDto = mapper.fromPageToDto(concertReadDto);
         return concertReadDtoPageDto;

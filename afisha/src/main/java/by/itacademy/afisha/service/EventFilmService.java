@@ -3,6 +3,7 @@ package by.itacademy.afisha.service;
 import by.itacademy.afisha.dao.api.IFilmDao;
 import by.itacademy.afisha.dao.entity.Concert;
 import by.itacademy.afisha.dao.entity.Film;
+import by.itacademy.afisha.dao.entity.enums.Type;
 import by.itacademy.afisha.service.dto.FilmCreateDto;
 import by.itacademy.afisha.service.dto.FilmReadDto;
 import by.itacademy.afisha.service.api.IFilmService;
@@ -44,10 +45,12 @@ public class EventFilmService implements IFilmService {
 
     @Override
     public PageDto<FilmReadDto> getAll(int page, int size ) {
-        List<Film> listEntity = eventFilmDao.findAll();
+        //List<Film> listEntity = eventFilmDao.findAll();
+        List<Film> listEntity = eventFilmDao.findByType(Type.FILMS);
         List<FilmReadDto> listDto = mapper.mapList(listEntity,FilmReadDto.class);
         Pageable pageRequest = PageRequest.of(--page,size);
-        Page<Film> entities = eventFilmDao.findAll(pageRequest);
+        //Page<Film> entities = eventFilmDao.findAll(pageRequest);
+        Page<Film> entities = eventFilmDao.findByType(Type.FILMS,pageRequest);
         Page<FilmReadDto> filmReadDto = new PageImpl<>(listDto, pageRequest, entities.getTotalElements());
         PageDto<FilmReadDto> filmReadDtoPageDto = mapper.fromPageToDto(filmReadDto);
         return filmReadDtoPageDto;
