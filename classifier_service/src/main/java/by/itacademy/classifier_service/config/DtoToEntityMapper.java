@@ -1,7 +1,8 @@
 package by.itacademy.classifier_service.config;
 
-import by.itacademy.afisha.service.utils.mapper.EventConcertMapper;
-import by.itacademy.afisha.service.utils.mapper.EventFilmMapper;
+
+import by.itacademy.classifier_service.service.utils.mapper.CategoryMapper;
+import by.itacademy.classifier_service.service.utils.mapper.CountryMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,14 +14,14 @@ public class DtoToEntityMapper {
     public ModelMapper modelMapper(){
         return new ModelMapper();
     }
-    @Bean
-    public EventFilmMapper filmMapper(ModelMapper mapper){
-        return new EventFilmMapper(mapper);
-    }
+    /*@Bean
+    public CategoryMapper categoryMapper(ModelMapper mapper){
+        return new CategoryMapper(mapper);
+    }*/
 
     @Bean
-    public EventConcertMapper concertMapper(ModelMapper mapper){
-        return new EventConcertMapper(mapper);
+    public CountryMapper countryMapper(ModelMapper mapper){
+        return new CountryMapper(mapper);
     }
 
 }

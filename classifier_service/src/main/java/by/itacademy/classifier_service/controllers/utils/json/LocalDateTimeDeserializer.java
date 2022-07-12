@@ -1,4 +1,4 @@
-package by.itacademy.classifier_service.controllers.json;
+package by.itacademy.classifier_service.controllers.utils.json;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;

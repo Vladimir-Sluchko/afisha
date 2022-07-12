@@ -1,4 +1,4 @@
-package by.itacademy.classifier_service.controllers.json;
+package by.itacademy.classifier_service.controllers.utils.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

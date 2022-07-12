@@ -30,6 +30,7 @@ public class Category {
         return title;
     }
 
+
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
@@ -45,4 +46,6 @@ public class Category {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
 }

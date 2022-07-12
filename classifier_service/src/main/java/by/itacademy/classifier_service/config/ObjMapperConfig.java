@@ -1,8 +1,8 @@
 package by.itacademy.classifier_service.config;
 
 
-import by.itacademy.classifier_service.controllers.json.LocalDateTimeDeserializer;
-import by.itacademy.classifier_service.controllers.json.LocalDateTimeSerializer;
+import by.itacademy.classifier_service.controllers.utils.json.LocalDateTimeDeserializer;
+import by.itacademy.classifier_service.controllers.utils.json.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
