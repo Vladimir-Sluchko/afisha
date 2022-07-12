@@ -17,9 +17,12 @@ public class ConcertReadDto {
     private Type type;
     private Status status;
 
+    public ConcertReadDto() {
+    }
+
     private ConcertReadDto(UUID uuid, LocalDateTime dtCreate, LocalDateTime dtUpdate,
-                          String title, String description, Long dtEvent,
-                          Long dtEndOfSale, Type type, Status status) {
+                           String title, String description, Long dtEvent,
+                           Long dtEndOfSale, Type type, Status status) {
         this.uuid = uuid;
         this.dtCreate = dtCreate;
         this.dtUpdate = dtUpdate;

@@ -14,6 +14,9 @@ public class ConcertCreateDto {
     private Status status;
     private UUID category;
 
+    public ConcertCreateDto() {
+    }
+
     public ConcertCreateDto(String title, String description, Long dtEvent,
                             Long dtEndOfSale, Type type, Status status, UUID category) {
 
