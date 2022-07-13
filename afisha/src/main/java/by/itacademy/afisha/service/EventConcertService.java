@@ -20,6 +20,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -37,8 +38,11 @@ public class EventConcertService implements IConcertService {
 
     @Override
     public ConcertCreateDto create(ConcertCreateDto eventConcert) {
-        Concert concert = mapper.map(eventConcert,Concert.class);
-        repository.save(concert);
+        Concert entity = mapper.map(eventConcert,Concert.class);
+        entity.setUuid(UUID.randomUUID());
+        entity.setDtCreate(LocalDateTime.now());
+        entity.setDtUpdate(LocalDateTime.now());
+        repository.save(entity);
         return eventConcert;
     }
 
@@ -80,6 +84,8 @@ public class EventConcertService implements IConcertService {
             concert.setDtEndOfSale(eventConcert.getDtEndOfSale());
             concert.setType(eventConcert.getType());
             concert.setStatus(eventConcert.getStatus());
+
+            concert.setDtUpdate(LocalDateTime.now());
 
             repository.save(concert);
         } else {

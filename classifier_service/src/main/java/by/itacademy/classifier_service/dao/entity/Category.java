@@ -12,6 +12,9 @@ public class Category {
     private LocalDateTime dtUpdate;
     private String title;
 
+    public Category() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public UUID getUuid() {
@@ -22,6 +25,7 @@ public class Category {
         return dtCreate;
     }
     @Column(name = "dt_update")
+    @Version
     public LocalDateTime getDtUpdate() {
         return dtUpdate;
     }
@@ -29,7 +33,6 @@ public class Category {
     public String getTitle() {
         return title;
     }
-
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;

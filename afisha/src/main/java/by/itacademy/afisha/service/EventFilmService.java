@@ -72,6 +72,7 @@ public class EventFilmService implements IFilmService {
             film.setReleaseYear(eventFilm.getReleaseYear());
             film.setReleaseDate(eventFilm.getReleaseDate());
             film.setDuration(eventFilm.getDuration());
+            film.setDtUpdate(LocalDateTime.now());
             repository.save(film);
         } else {
             throw new OptimisticLockException("Entity already updated");

@@ -1,7 +1,6 @@
 package by.itacademy.classifier_service.dao.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -14,16 +13,20 @@ public class Country {
     private LocalDateTime dtUpdate;
     private String title;
     private String description;
+
+    public Country() {
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public UUID getUuid() {
         return uuid;
     }
-    @Column(name = "dt_create")
+
     public LocalDateTime getDtCreate() {
         return dtCreate;
     }
-    @Column(name = "dt_update")
+
+    @Version
     public LocalDateTime getDtUpdate() {
         return dtUpdate;
     }

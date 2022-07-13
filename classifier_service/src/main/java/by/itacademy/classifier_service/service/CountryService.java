@@ -12,10 +12,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
 public class CountryService implements ICountryService {
     private final ICountryDao repository;
     private final ModelMapper mapper;
@@ -26,12 +30,12 @@ public class CountryService implements ICountryService {
         this.mapper = mapper;
     }
 
-    @Autowired
-
-
     @Override
     public CountryCreateDto create(CountryCreateDto dto) {
-        Country entity = mapper.map(dto,Country.class);
+        Country entity = mapper.map(dto, Country.class);
+        entity.setUuid(UUID.randomUUID());
+        entity.setDtCreate(LocalDateTime.now());
+        entity.setDtUpdate(LocalDateTime.now());
         repository.save(entity);
         return dto;
     }

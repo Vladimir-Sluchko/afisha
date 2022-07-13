@@ -12,9 +12,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/CONCERTS")
 public class ControllerConcert {
-    /*{
+    {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    }*/
+    }
     private final IConcertService service;
 
     public ControllerConcert(IConcertService service) {
