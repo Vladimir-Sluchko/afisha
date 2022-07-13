@@ -16,6 +16,6 @@ public class ControllerCountry {
 
     @PostMapping("/country")
     public ResponseEntity<CountryCreateDto> create (@RequestBody CountryReadDto country){
-        return null;//ResponseEntity.status(HttpStatus.CREATED).body();
+        return new ResponseEntity<>()
     }
 }
