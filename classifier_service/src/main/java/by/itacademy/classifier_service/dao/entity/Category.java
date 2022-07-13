@@ -16,7 +16,6 @@ public class Category {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public UUID getUuid() {
         return uuid;
     }
