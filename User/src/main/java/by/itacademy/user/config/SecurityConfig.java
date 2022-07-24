@@ -1,8 +1,8 @@
 package by.itacademy.user.config;
 
 import by.itacademy.user.controller.filter.JwtFilter;
-import by.itacademy.user.service.UserService;
-import by.itacademy.user.service.UserServiceDetails;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,9 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtFilter filter;
+    private final DaoAuthenticationProvider provider;
 
-    public SecurityConfig(JwtFilter filter) {
+    public SecurityConfig(JwtFilter filter, DaoAuthenticationProvider provider) {
         this.filter = filter;
+        this.provider = provider;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(provider);
     }
 
     @Override

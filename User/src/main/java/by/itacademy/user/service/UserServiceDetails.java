@@ -27,8 +27,12 @@ public class UserServiceDetails implements UserDetailsService {
     public User findByMail(String mail){
         return repository.findByMail(mail);
     }
+    public User findByUsername(String username){
+        return repository.findByUsername(username);
+    }
 
-    /*@Override
+    @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
         if(user == null){
@@ -36,10 +40,10 @@ public class UserServiceDetails implements UserDetailsService {
         }
 
         return new org.springframework.security.core.userdetails
-                .User(user.getUserName(),user.getPassword(),mapRolesAuthority(user.getRoles()));
-    }*/
+                .User(user.getUsername(),user.getPassword(),mapRolesAuthority(user.getAuthorities()));
+    }
 
-    @Override
+   /* @Override
     @Transactional
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
         User user = findByMail(mail);
@@ -49,7 +53,7 @@ public class UserServiceDetails implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails
                 .User(user.getMail(),user.getPassword(),mapRolesAuthority(user.getAuthorities()));
-    }
+    }*/
 
 
 

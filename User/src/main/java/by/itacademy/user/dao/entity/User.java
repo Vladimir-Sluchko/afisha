@@ -16,7 +16,7 @@ public class User implements UserDetails {
     private LocalDateTime dtCreate;
     private LocalDateTime dtUpdate;
     private String mail;
-    private String userName;
+    private String username;
     private Set<Role> roles;
     private Status status;
     private String password;
@@ -76,7 +76,7 @@ public class User implements UserDetails {
     @Override
     @Column(name = "username")
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @Override
@@ -115,8 +115,8 @@ public class User implements UserDetails {
         this.mail = mail;
     }
 
-    public void setUsername(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setAuthorities(Set<Role> roles) {

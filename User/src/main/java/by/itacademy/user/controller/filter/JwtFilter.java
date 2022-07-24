@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -22,10 +23,10 @@ import static org.apache.logging.log4j.util.Strings.isEmpty;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final UserDetailsManager userManager;
+    private final UserDetailsService userDetailsService;
 
-    public JwtFilter(UserDetailsManager userManager) {
-        this.userManager = userManager;
+    public JwtFilter(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -48,7 +49,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         // Get user identity and set it on the spring security context
-        UserDetails userDetails = userManager
+        UserDetails userDetails = userDetailsService
                 .loadUserByUsername(JwtTokenUtil.getUsername(token));
 
         UsernamePasswordAuthenticationToken
