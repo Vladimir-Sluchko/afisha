@@ -43,20 +43,6 @@ public class UserServiceDetails implements UserDetailsService {
                 .User(user.getUsername(),user.getPassword(),mapRolesAuthority(user.getAuthorities()));
     }
 
-   /* @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-        User user = findByMail(mail);
-        if(user == null){
-            throw new UsernameNotFoundException(String.format("User '%s' not found",mail));
-        }
-
-        return new org.springframework.security.core.userdetails
-                .User(user.getMail(),user.getPassword(),mapRolesAuthority(user.getAuthorities()));
-    }*/
-
-
-
     private Collection<? extends GrantedAuthority> mapRolesAuthority(Collection<Role> roles){
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getAuthority())).collect(Collectors.toList());
 

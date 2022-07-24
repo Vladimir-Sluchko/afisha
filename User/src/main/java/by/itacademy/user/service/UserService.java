@@ -9,12 +9,14 @@ import by.itacademy.user.dao.entity.User;
 import by.itacademy.user.dao.entity.enums.Status;
 import by.itacademy.user.service.api.IUserService;
 import by.itacademy.user.service.dto.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,11 +25,13 @@ public class UserService implements IUserService {
     private final UserRepository repository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder encoder;
+    private final ModelMapper mapper;
 
-    public UserService(UserRepository repository,PasswordEncoder encoder, RoleRepository roleRepository) {
+    public UserService(UserRepository repository, PasswordEncoder encoder, RoleRepository roleRepository, ModelMapper mapper) {
         this.repository = repository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
+        this.mapper = mapper;
     }
 
     public RegistrationDto save(RegistrationDto dto) {
@@ -72,8 +76,25 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserReadDto getMe(String mail) {
-        return null;
+    public UserReadDto infoForMe(String username) {
+        User entity = repository.findByUsername(username);
+
+        StringBuilder builder = new StringBuilder();
+        for (Role authority : entity.getAuthorities()) {
+            builder.append(authority.getAuthority()).append(", ");
+        }
+
+        UserReadDto dto = new UserReadDto();
+        dto.setUuid(entity.getUuid());
+        dto.setDtCreate(entity.getDtCreate());
+        dto.setDtUpdate(entity.getDtUpdate());
+        dto.setMail(entity.getMail());
+        dto.setNick(entity.getUsername());
+        dto.setRole(builder.substring(0, builder.length() - 2));
+        dto.setStatus(entity.getStatus());
+        return dto;
+
+
     }
 
 }

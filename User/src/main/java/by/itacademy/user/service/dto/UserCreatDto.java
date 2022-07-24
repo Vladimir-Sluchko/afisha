@@ -1,12 +1,11 @@
 package by.itacademy.user.service.dto;
 
-import by.itacademy.user.dao.entity.enums.RoleNoten;
 import by.itacademy.user.dao.entity.enums.Status;
 
 public class UserCreatDto {
     private String mail;
     private String nick;
-    private RoleNoten role;
+    private String role;
     private Status status;
     private String password;
 
@@ -21,7 +20,7 @@ public class UserCreatDto {
         return nick;
     }
 
-    public RoleNoten getRole() {
+    public String  getRole() {
         return role;
     }
 

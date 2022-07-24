@@ -1,6 +1,5 @@
 package by.itacademy.user.service.dto;
 
-import by.itacademy.user.dao.entity.enums.RoleNoten;
 import by.itacademy.user.dao.entity.enums.Status;
 
 import java.time.LocalDateTime;
@@ -12,7 +11,7 @@ public class UserReadDto {
     private LocalDateTime dtUpdate;
     private String mail;
     private String nick;
-    private RoleNoten role;
+    private String  role;
     private Status status;
 
     public UserReadDto() {
@@ -38,7 +37,7 @@ public class UserReadDto {
         return nick;
     }
 
-    public RoleNoten getRole() {
+    public String getRole() {
         return role;
     }
 
@@ -66,7 +65,7 @@ public class UserReadDto {
         this.nick = nick;
     }
 
-    public void setRole(RoleNoten role) {
+    public void setRole(String  role) {
         this.role = role;
     }
 

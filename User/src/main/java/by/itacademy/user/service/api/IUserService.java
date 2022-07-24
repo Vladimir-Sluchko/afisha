@@ -7,5 +7,5 @@ import by.itacademy.user.service.dto.*;
 public interface IUserService {
     RegistrationDto save (RegistrationDto dto);
     User login(LoginUserDto dto);
-    UserReadDto getMe(String mail);
+    UserReadDto infoForMe(String mail);
 }
