@@ -54,4 +54,9 @@ public class CategoryService implements ICategoryService {
         PageDto<CategoryReadDto> pageDto = mapper.map(pageDtoR,PageDto.class);
         return pageDto;
     }
+
+    @Override
+    public boolean сheckUuid(UUID uuid) {
+        return repository.existsByUuid(uuid);
+    }
 }

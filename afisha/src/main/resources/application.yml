@@ -15,3 +15,6 @@ spring:
     driver-class-name: org.postgresql.Driver
 server:
   port: 80
+url:
+  urlClassifierCountry: http://localhost:8081/classifier/country/
+  urlClassifierCategory: http://localhost:8081/classifier/concert/

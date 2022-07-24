@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 @Repository
-public interface IUserDao extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<User, UUID> {
     User findByMail (String mail);
+
+    boolean existsByMail(String mail);
 }

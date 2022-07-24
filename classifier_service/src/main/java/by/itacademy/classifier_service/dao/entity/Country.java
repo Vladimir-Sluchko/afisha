@@ -1,5 +1,7 @@
 package by.itacademy.classifier_service.dao.entity;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -22,19 +24,23 @@ public class Country {
         return uuid;
     }
 
+    @NotNull
     public LocalDateTime getDtCreate() {
         return dtCreate;
     }
 
     @Version
+    @NotNull
     public LocalDateTime getDtUpdate() {
         return dtUpdate;
     }
 
+    @NotNull
     public String getTitle() {
         return title;
     }
 
+    @NotNull
     public String getDescription() {
         return description;
     }

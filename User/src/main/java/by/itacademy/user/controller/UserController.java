@@ -1,55 +1,44 @@
 package by.itacademy.user.controller;
 
-import by.itacademy.user.service.api.IServiceUsers;
-import by.itacademy.user.service.dto.*;
+import by.itacademy.user.controller.utils.JwtTokenUtil;
+import by.itacademy.user.service.UserService;
+import by.itacademy.user.service.UserServiceDetails;
+import by.itacademy.user.service.dto.LoginUserDto;
+import by.itacademy.user.service.dto.RegistrationDto;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
-    private final IServiceUsers service;
+    private final UserService service;
 
-    public UserController(IServiceUsers service) {
+    public UserController(UserService service) {
         this.service = service;
     }
-    @PostMapping
-    public ResponseEntity<UserCreatDto> create (@RequestBody UserCreatDto dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
-    }
 
-    @GetMapping
-    public ResponseEntity<PageDto> getPage (@RequestParam(name = "page",defaultValue = "1") int page,
-                                            @RequestParam(name = "size", defaultValue = "20") int size){
-        return ResponseEntity.ok(service.getAll(page,size));
-    }
-
-    @GetMapping("/{uuid}")
-    public ResponseEntity<UserReadDto> get (@PathVariable UUID uuid){
-        return ResponseEntity.ok(service.get(uuid));
-    }
-    @PutMapping("{uuid}/dt_update/{dt_update}")
-    public ResponseEntity<UserCreatDto> update (@RequestBody UserCreatDto dto,
-                                                @PathVariable UUID uuid,
-                                                @PathVariable(name = "dt_update") Long dtUpdate){
-        return ResponseEntity.ok(service.update(dto,uuid,dtUpdate));
-    }
     @PostMapping("/registration")
     public ResponseEntity<RegistrationDto> registration (@RequestBody RegistrationDto dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.registration(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginUserDto> login (@RequestBody LoginUserDto dto){
-        return ResponseEntity.status(HttpStatus.OK).body(service.login(dto);
+    public ResponseEntity<String>  login(@RequestBody LoginUserDto dto){
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.AUTHORIZATION,
+                JwtTokenUtil.generateAccessToken(service.login(dto)));
+        return ResponseEntity.ok().headers(headers).build();
     }
 
-    public ResponseEntity<UserReadDto> infoMe (@PQ){
-        return ResponseEntity.ok(service.get(uu))
+    @GetMapping("/test")
+    public ResponseEntity<String> test(){
+        return ResponseEntity.ok("ok");
     }
+
 
 }

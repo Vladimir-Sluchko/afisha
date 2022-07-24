@@ -9,4 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface ICountryDao extends JpaRepository<Country,UUID> {
+    boolean existsByUuid (UUID uuid);
 }

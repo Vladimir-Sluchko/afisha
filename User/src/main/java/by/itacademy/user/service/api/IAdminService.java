@@ -4,7 +4,7 @@ import by.itacademy.user.service.dto.*;
 
 import java.util.UUID;
 
-public interface IServiceUsers {
+public interface IAdminService {
     UserCreatDto create(UserCreatDto dto);
 
     PageDto<UserReadDto> getAll(int page, int size);

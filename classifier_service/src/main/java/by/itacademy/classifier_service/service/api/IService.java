@@ -7,4 +7,6 @@ import java.util.UUID;
 public interface IService<C,R> {
     C create (C dto);
     PageDto<R> getAll(int page, int size );
+
+    boolean сheckUuid(UUID uuid);
 }

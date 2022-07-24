@@ -1,8 +1,8 @@
 package by.itacademy.user.config;
 
 
-import by.itacademy.user.controller.json.LocalDateTimeDeserializer;
-import by.itacademy.user.controller.json.LocalDateTimeSerializer;
+import by.itacademy.user.controller.utils.json.LocalDateTimeDeserializer;
+import by.itacademy.user.controller.utils.json.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;

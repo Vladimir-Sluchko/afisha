@@ -52,4 +52,10 @@ public class CountryService implements ICountryService {
         PageDto<CountryReadDto> pageDto = mapper.map(pageDtoR,PageDto.class);
         return pageDto;
     }
+
+    @Override
+    public boolean сheckUuid(UUID uuid) {
+        return repository.existsByUuid(uuid);
+    }
+
 }

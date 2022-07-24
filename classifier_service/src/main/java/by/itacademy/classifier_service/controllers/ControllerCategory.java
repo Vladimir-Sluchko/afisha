@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.TimeZone;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/classifier")
@@ -22,14 +24,23 @@ public class ControllerCategory {
         this.service = service;
     }
     @PostMapping("/concert/category")
-    public ResponseEntity<CategoryCreateDto> create (@RequestBody CategoryCreateDto dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
+    public ResponseEntity<CategoryCreateDto> create (@Valid @RequestBody CategoryCreateDto dto){
+        return new ResponseEntity<>(service.create(dto),HttpStatus.CREATED);
     }
 
     @GetMapping("/concert/category")
     public ResponseEntity<PageDto> get (@RequestParam(name = "page",defaultValue = "1") int page,
                                         @RequestParam(name = "size", defaultValue = "20") int size){
         return ResponseEntity.ok(service.getAll(page,size));
+    }
+
+    @GetMapping("/concert/{uuid}")
+    public ResponseEntity<UUID> сheckUuid (@PathVariable UUID uuid){
+        if (this.service.сheckUuid(uuid)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
 }

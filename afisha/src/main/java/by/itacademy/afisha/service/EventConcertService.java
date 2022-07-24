@@ -6,8 +6,8 @@ import by.itacademy.afisha.dao.entity.enums.Type;
 import by.itacademy.afisha.service.api.IConcertService;
 import by.itacademy.afisha.service.dto.ConcertCreateDto;
 import by.itacademy.afisha.service.dto.ConcertReadDto;
-import by.itacademy.afisha.service.dto.FilmReadDto;
 import by.itacademy.afisha.service.dto.PageDto;
+import by.itacademy.afisha.service.utils.CheckUuid;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,29 +20,31 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class EventConcertService implements IConcertService {
     private final IConcertDao repository;
-
-
+    private final CheckUuid checkUuid;
     private final ModelMapper mapper;
 
-    public EventConcertService(IConcertDao repository, ModelMapper mapper) {
+    public EventConcertService(IConcertDao repository, CheckUuid checkUuid, ModelMapper mapper) {
         this.repository = repository;
+        this.checkUuid = checkUuid;
         this.mapper = mapper;
     }
 
     @Override
     public ConcertCreateDto create(ConcertCreateDto eventConcert) {
-        Concert entity = mapper.map(eventConcert,Concert.class);
-        entity.setUuid(UUID.randomUUID());
-        entity.setDtCreate(LocalDateTime.now());
-        entity.setDtUpdate(LocalDateTime.now());
-        repository.save(entity);
+        boolean check = checkUuid.isCheckUuid(eventConcert.getCategory(),"category");
+        if (check){
+            Concert entity = mapper.map(eventConcert,Concert.class);
+            entity.setUuid(UUID.randomUUID());
+            entity.setDtCreate(LocalDateTime.now());
+            entity.setDtUpdate(LocalDateTime.now());
+            repository.save(entity);
+        }
         return eventConcert;
     }
 
@@ -77,7 +79,8 @@ public class EventConcertService implements IConcertService {
         Concert concert = repository.findById(uuid).orElseThrow(()-> {
             throw new IllegalArgumentException("Нет такого концерта");
         });
-        if (concert.getDtUpdate().equals(dateUpdate)) {
+        boolean check = checkUuid.isCheckUuid(eventConcert.getCategory(),"category");
+        if (concert.getDtUpdate().equals(dateUpdate) && check) {
             concert.setTitle(eventConcert.getTitle());
             concert.setDescription(eventConcert.getDescription());
             concert.setDtEvent(eventConcert.getDtEvent());

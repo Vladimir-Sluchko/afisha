@@ -1,4 +1,4 @@
-package by.itacademy.user.controller.json;
+package by.itacademy.user.controller.utils.json;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;

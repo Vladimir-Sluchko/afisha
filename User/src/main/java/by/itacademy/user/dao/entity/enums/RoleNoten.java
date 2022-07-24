@@ -1,6 +1,6 @@
 package by.itacademy.user.dao.entity.enums;
 
-public enum Role {
+public enum RoleNoten {
     ADMIN,
     USER
 }

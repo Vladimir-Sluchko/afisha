@@ -7,10 +7,14 @@ import by.itacademy.afisha.service.dto.FilmCreateDto;
 import by.itacademy.afisha.service.dto.FilmReadDto;
 import by.itacademy.afisha.service.api.IFilmService;
 import by.itacademy.afisha.service.dto.PageDto;
+import by.itacademy.afisha.service.utils.CheckUuid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.OptimisticLockException;
 import java.time.Instant;
@@ -23,23 +27,27 @@ import java.util.stream.Collectors;
 @Service
 public class EventFilmService implements IFilmService {
     private final IFilmDao repository;
-
-
     private final ModelMapper mapper;
+    private final CheckUuid checkUuid;
 
     @Autowired
-    public EventFilmService(IFilmDao eventFilmDao, ModelMapper mapper) {
+    public EventFilmService(IFilmDao eventFilmDao, RestTemplate restTemplate, ModelMapper mapper, CheckUuid checkUuid) {
         this.repository = eventFilmDao;
+        this.checkUuid = checkUuid;
         this.mapper = mapper;
     }
 
     @Override
     public FilmCreateDto create(FilmCreateDto eventFilm) {
-        Film entity = mapper.map(eventFilm, Film.class);
-        entity.setUuid(UUID.randomUUID());
-        entity.setDtCreate(LocalDateTime.now());
-        entity.setDtUpdate(LocalDateTime.now());
-        repository.save(entity);
+        boolean check = checkUuid.isCheckUuid(eventFilm.getCountry(),"country");
+        if(check){
+            Film entity = mapper.map(eventFilm, Film.class);
+            entity.setUuid(UUID.randomUUID());
+            entity.setDtCreate(LocalDateTime.now());
+            entity.setDtUpdate(LocalDateTime.now());
+            repository.save(entity);
+        }
+
         return eventFilm;
     }
 
@@ -61,7 +69,9 @@ public class EventFilmService implements IFilmService {
         Film film = repository.findById(uuid).orElseThrow(()-> {
             throw new IllegalArgumentException("Нет такого фильма");
         });
-        if (film.getDtUpdate().equals(dateUpdate)) {
+        boolean check = checkUuid.isCheckUuid(eventFilm.getCountry(),"country/");
+
+        if (film.getDtUpdate().equals(dateUpdate) && check) {
             film.setTitle(eventFilm.getTitle());
             film.setDescription(eventFilm.getDescription());
             film.setDtEvent(eventFilm.getDtEvent());

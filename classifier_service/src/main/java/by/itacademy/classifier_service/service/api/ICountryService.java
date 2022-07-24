@@ -10,4 +10,5 @@ public interface ICountryService extends IService<CountryCreateDto, CountryReadD
 
     @Override
     PageDto<CountryReadDto> getAll(int page, int size);
+
 }
