@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users", schema = "new")
+@Table(name = "users", schema = "security")
 public class User implements UserDetails {
 
     private UUID uuid;
@@ -146,106 +146,98 @@ public class User implements UserDetails {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-    /*@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    public UUID getUuid() {
-        return uuid;
+    public static Builder builder() {
+        return new Builder();
     }
 
+    public static class Builder {
 
-    public LocalDateTime getDtCreate() {
-        return dtCreate;
+        private UUID uuid;
+        private LocalDateTime dtCreate;
+        private LocalDateTime dtUpdate;
+        private String mail;
+        private String username;
+        private Set<Role> roles;
+        private Status status;
+        private String password;
+        private boolean accountNonExpired;
+        private boolean accountNonLocked;
+        private boolean credentialsNonExpired;
+        private boolean enabled;
+
+        public Builder setUuid(UUID uuid) {
+            this.uuid = uuid;
+            return this;
+        }
+        public Builder setDtCreate(LocalDateTime dtCreate) {
+            this.dtCreate = dtCreate;
+            return this;
+        }
+
+        public Builder setDtUpdate(LocalDateTime dtUpdate) {
+            this.dtUpdate = dtUpdate;
+            return this;
+        }
+
+        public Builder setMail(String mail) {
+            this.mail = mail;
+            return this;
+        }
+        public Builder setUsername(String username) {
+            this.username = username;
+            return this;
+        }
+        public Builder setAuthorities(Set<Role> roles) {
+            this.roles = roles;
+            return this;
+        }
+        public Builder setStatus(Status status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder setAccountNonExpired(boolean accountNonExpired) {
+            this.accountNonExpired = accountNonExpired;
+            return this;
+        }
+
+        public Builder setAccountNonLocked(boolean accountNonLocked) {
+            this.accountNonLocked = accountNonLocked;
+            return this;
+        }
+
+        public Builder setCredentialsNonExpired(boolean credentialsNonExpired) {
+            this.credentialsNonExpired = credentialsNonExpired;
+            return this;
+        }
+
+        public Builder setEnabled(boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public User build() {
+            User user = new User();
+
+            user.setUuid(this.uuid);
+            user.setDtCreate(this.dtCreate);
+            user.setDtUpdate(this.dtUpdate);
+            user.setMail(this.mail);
+            user.setUsername(this.username);
+            user.setAuthorities(this.roles);
+            user.setStatus(this.status);
+            user.setPassword(this.password);
+            user.setAccountNonExpired(this.accountNonExpired);
+            user.setAccountNonLocked(this.accountNonLocked);
+            user.setCredentialsNonExpired(this.credentialsNonExpired);
+            user.setEnabled(this.enabled);
+
+            return user;
+        }
     }
-
-    public LocalDateTime getDtUpdate() {
-        return dtUpdate;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    @ManyToMany
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_uuid"),
-            inverseJoinColumns = @JoinColumn(name = "role_uuid"))
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
-    }
-
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
-    }
-
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public void setDtCreate(LocalDateTime dtCreate) {
-        this.dtCreate = dtCreate;
-    }
-
-    public void setDtUpdate(LocalDateTime dtUpdate) {
-        this.dtUpdate = dtUpdate;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }*/
 }

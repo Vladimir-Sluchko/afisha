@@ -1,30 +1,39 @@
 package by.itacademy.user.controller.utils;
 
+import by.itacademy.user.dao.entity.Role;
+import by.itacademy.user.dao.entity.User;
 import io.jsonwebtoken.*;
-import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class JwtTokenUtil {
 
     private static final String jwtSecret = "NDQ1ZjAzNjQtMzViZi00MDRjLTljZjQtNjNjYWIyZTU5ZDYw";
     private static final String jwtIssuer = "ITAcademy";
 
-
-    public static String generateAccessToken(UserDetails user) {
-        return generateAccessToken(user.getUsername());
+    public static String generateAccessToken(User user) {
+        return generateAccessToken(user.getUsername(), user.getAuthorities());
     }
 
-    public static String generateAccessToken(String name) {
+    public static String generateAccessToken(String name, Set<Role> role) {
+        String roleStr = role.stream()
+                .map(s -> s.getAuthority())
+                .collect(Collectors.joining(", "));
         return Jwts.builder()
                 .setSubject(name)
+                .claim("role", roleStr)
                 .setIssuer(jwtIssuer)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(7))) // 1 week
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
+
 
     public static String getUsername(String token) {
         Claims claims = Jwts.parser()

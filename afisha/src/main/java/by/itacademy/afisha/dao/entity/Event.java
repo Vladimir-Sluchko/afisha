@@ -54,14 +54,10 @@ public class Event {
         return description;
     }
 
-    //@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    //@JsonSerialize(using = LocalDateTimeSerializer.class)
     public Long getDtEvent() {
         return dtEvent;
     }
 
-    //@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    //@JsonSerialize(using = LocalDateTimeSerializer.class)
     public Long getDtEndOfSale() {
         return dtEndOfSale;
     }

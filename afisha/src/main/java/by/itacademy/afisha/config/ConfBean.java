@@ -1,6 +1,6 @@
 package by.itacademy.afisha.config;
 
-import by.itacademy.afisha.service.utils.CheckUuid;
+import by.itacademy.afisha.service.utils.ClassifierClient;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,8 +20,8 @@ public class ConfBean {
     }
 
     @Bean
-    public CheckUuid checkUuid(RestTemplate restTemplate){
-        return new CheckUuid(restTemplate);
+    public ClassifierClient checkUuid(RestTemplate restTemplate){
+        return new ClassifierClient(restTemplate);
     }
 
 }

@@ -1,24 +1,29 @@
 package by.itacademy.user.controller.advices;
 
+import by.itacademy.user.service.dto.error.FieldErrorForMultiple;
+import by.itacademy.user.service.dto.error.MultipleError;
 import by.itacademy.user.service.dto.error.SingleError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.persistence.EntityExistsException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.*;
 
 @RestControllerAdvice
 public class GlobalHandler {
+    private static final String FIELD = "Field ";
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST) ///400  ошибка
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public List<SingleError> handle(HttpMessageNotReadableException e){
         List<SingleError> errors = new ArrayList<>();
         errors.add(new SingleError(e.getMessage()));
@@ -26,15 +31,7 @@ public class GlobalHandler {
     }
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST) ///400  ошибка
-    public List<SingleError> handle(MethodArgumentNotValidException e){
-        List<SingleError> errors = new ArrayList<>();
-        errors.add(new SingleError(e.getMessage()));
-        return errors;
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST) ///400  ошибка
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public List<SingleError> handle(EntityExistsException e){
         List<SingleError> errors = new ArrayList<>();
         errors.add(new SingleError(e.getMessage()));
@@ -42,7 +39,7 @@ public class GlobalHandler {
     }
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.FORBIDDEN) ///400  ошибка
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     public List<SingleError> handle(SecurityException e){
         List<SingleError> errors = new ArrayList<>();
         errors.add(new SingleError(e.getMessage()));
@@ -50,23 +47,48 @@ public class GlobalHandler {
     }
 
     @ExceptionHandler
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR) //500 ошибка
-    public List<Map<String,Object>> handle(IllegalStateException e){
-        List<Map<String,Object>> data = new ArrayList<>();
-        Map<String,Object> map = new HashMap<>();
-        map.put("logref","error");
-        map.put("message",e.getMessage());
-        data.add(map);
-        return data;
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public List<SingleError> handle(EntityNotFoundException e){
+        List<SingleError> errors = new ArrayList<>();
+        errors.add(new SingleError(e.getMessage()));
+        return errors;
     }
 
-    /*@ExceptionHandler
-    public List<Map<String,Object>> handle(Exception e){
-        List<Map<String,Object>> data = new ArrayList<>();
-        Map<String,Object> map = new HashMap<>();
-        map.put("logref","error");
-        map.put("message",e.getMessage());
-        data.add(map);
-        return data;
-    }*/
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public List<SingleError> handle(Exception e){
+        List<SingleError> errors = new ArrayList<>();
+        errors.add(new SingleError(e.getMessage()));
+        return errors;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public List<MultipleError> handle(ConstraintViolationException e){
+        List<MultipleError> multipleErrors = new ArrayList<>();
+        List<FieldErrorForMultiple> fieldErrorForMultiples = new ArrayList<>();
+        Set<ConstraintViolation<?>> set = e.getConstraintViolations();
+            for (ConstraintViolation<?> constraintViolation : set) {
+                String s = constraintViolation.getPropertyPath().toString();
+                fieldErrorForMultiples.add(new FieldErrorForMultiple((FIELD + s.substring(s.lastIndexOf(".") + 1))
+                        ,constraintViolation.getMessage()));
+            }
+            multipleErrors.add(new MultipleError(fieldErrorForMultiples));
+        return multipleErrors;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public List<MultipleError> handle(MethodArgumentNotValidException e) {
+        List<MultipleError> multipleErrors = new ArrayList<>();
+        List<FieldErrorForMultiple> fieldErrorForMultiples = new ArrayList<>();
+        List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
+        for (ObjectError allError : allErrors) {
+            String field = ((FieldError) allError).getField();
+            fieldErrorForMultiples.add(new FieldErrorForMultiple(field
+                    ,allError.getDefaultMessage()));
+        }
+        multipleErrors.add(new MultipleError(fieldErrorForMultiples));
+        return multipleErrors;
+    }
 }

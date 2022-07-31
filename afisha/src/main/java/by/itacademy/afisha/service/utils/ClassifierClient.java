@@ -1,17 +1,13 @@
 package by.itacademy.afisha.service.utils;
 
-import by.itacademy.afisha.dao.entity.Event;
-import by.itacademy.afisha.service.dto.FilmCreateDto;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URL;
 import java.util.UUID;
-
-public class CheckUuid {
+//classifire client
+public class ClassifierClient {
     private final String url = "http://localhost:8081/classifier/";
 
     private final RestTemplate restTemplate;
@@ -24,7 +20,7 @@ public class CheckUuid {
     @Value("${url.urlClassifierCategory}")
     private String urlClassifierCategory;
 
-    public CheckUuid(RestTemplate restTemplate) {
+    public ClassifierClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
@@ -46,4 +42,17 @@ public class CheckUuid {
             return false;
         }
     }
+
+    public boolean isCheckUuidCountry(UUID uuid){
+        String url = this.urlClassifierCountry;
+        ResponseEntity<Object> forEntity = restTemplate.getForEntity(url + uuid, Object.class);
+        HttpStatus statusCode = forEntity.getStatusCode();
+        if(statusCode == HttpStatus.OK){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

@@ -7,7 +7,7 @@ import by.itacademy.afisha.service.api.IConcertService;
 import by.itacademy.afisha.service.dto.ConcertCreateDto;
 import by.itacademy.afisha.service.dto.ConcertReadDto;
 import by.itacademy.afisha.service.dto.PageDto;
-import by.itacademy.afisha.service.utils.CheckUuid;
+import by.itacademy.afisha.service.utils.ClassifierClient;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,10 +26,10 @@ import java.util.stream.Collectors;
 @Service
 public class EventConcertService implements IConcertService {
     private final IConcertDao repository;
-    private final CheckUuid checkUuid;
+    private final ClassifierClient checkUuid;
     private final ModelMapper mapper;
 
-    public EventConcertService(IConcertDao repository, CheckUuid checkUuid, ModelMapper mapper) {
+    public EventConcertService(IConcertDao repository, ClassifierClient checkUuid, ModelMapper mapper) {
         this.repository = repository;
         this.checkUuid = checkUuid;
         this.mapper = mapper;

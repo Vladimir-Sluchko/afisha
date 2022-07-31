@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "category", schema = "afisha_test")
+@Table(name = "category", schema = "library")
 public class Category {
     private UUID uuid;
     private LocalDateTime dtCreate;

@@ -16,8 +16,6 @@ public class Concert extends Event{
     public Concert() {
     }
 
-
-
     @Column(table = "concert")
     public UUID getCategory() {
         return category;

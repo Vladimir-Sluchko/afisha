@@ -1,15 +1,15 @@
-package by.itacademy.user.service.dto.error;
+package by.itacademy.classifier_service.service.dto.error;
 
-public class FieldError {
+public class FieldErrorForMultiple {
     private String message;
     private String field;
 
-    public FieldError(String message, String field) {
+    public FieldErrorForMultiple(String field, String message) {
         this.message = message;
         this.field = field;
     }
 
-    public FieldError() {
+    public FieldErrorForMultiple() {
     }
 
     public String getMessage() {

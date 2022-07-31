@@ -18,11 +18,9 @@ import java.util.stream.Collectors;
 public class UserServiceDetails implements UserDetailsService {
     private UserRepository repository;
 
-
     public UserServiceDetails(UserRepository repository) {
         this.repository = repository;
     }
-
 
     public User findByMail(String mail){
         return repository.findByMail(mail);

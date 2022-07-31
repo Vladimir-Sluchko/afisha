@@ -5,19 +5,14 @@ import by.itacademy.classifier_service.service.dto.CategoryCreateDto;
 import by.itacademy.classifier_service.service.dto.PageDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.TimeZone;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/classifier")
 public class ControllerCategory {
-    {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    }
     private final ICategoryService service;
 
     public ControllerCategory(ICategoryService service) {
@@ -25,7 +20,7 @@ public class ControllerCategory {
     }
     @PostMapping("/concert/category")
     public ResponseEntity<CategoryCreateDto> create (@Valid @RequestBody CategoryCreateDto dto){
-        return new ResponseEntity<>(service.create(dto),HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
     @GetMapping("/concert/category")
@@ -34,7 +29,7 @@ public class ControllerCategory {
         return ResponseEntity.ok(service.getAll(page,size));
     }
 
-    @GetMapping("/concert/{uuid}")
+    @GetMapping("/concert/check/{uuid}")
     public ResponseEntity<UUID> сheckUuid (@PathVariable UUID uuid){
         if (this.service.сheckUuid(uuid)) {
             return new ResponseEntity<>(HttpStatus.OK);

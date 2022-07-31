@@ -7,12 +7,10 @@ import by.itacademy.afisha.service.dto.FilmCreateDto;
 import by.itacademy.afisha.service.dto.FilmReadDto;
 import by.itacademy.afisha.service.api.IFilmService;
 import by.itacademy.afisha.service.dto.PageDto;
-import by.itacademy.afisha.service.utils.CheckUuid;
+import by.itacademy.afisha.service.utils.ClassifierClient;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,10 +26,10 @@ import java.util.stream.Collectors;
 public class EventFilmService implements IFilmService {
     private final IFilmDao repository;
     private final ModelMapper mapper;
-    private final CheckUuid checkUuid;
+    private final ClassifierClient checkUuid;
 
     @Autowired
-    public EventFilmService(IFilmDao eventFilmDao, RestTemplate restTemplate, ModelMapper mapper, CheckUuid checkUuid) {
+    public EventFilmService(IFilmDao eventFilmDao, RestTemplate restTemplate, ModelMapper mapper, ClassifierClient checkUuid) {
         this.repository = eventFilmDao;
         this.checkUuid = checkUuid;
         this.mapper = mapper;
@@ -69,7 +67,7 @@ public class EventFilmService implements IFilmService {
         Film film = repository.findById(uuid).orElseThrow(()-> {
             throw new IllegalArgumentException("Нет такого фильма");
         });
-        boolean check = checkUuid.isCheckUuid(eventFilm.getCountry(),"country/");
+        boolean check = checkUuid.isCheckUuidCountry(eventFilm.getCountry());
 
         if (film.getDtUpdate().equals(dateUpdate) && check) {
             film.setTitle(eventFilm.getTitle());

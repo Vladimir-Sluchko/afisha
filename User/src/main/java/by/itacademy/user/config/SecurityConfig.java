@@ -13,6 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String PUBLIC_REGISTRATION = "/users/registration";
+    private static final String PUBLIC_LOGIN = "/users/login";
+    private static final String AUTHENTICATED = "/users/me";
+    private static final String AUTH_ADMIN = "/users/**";
+    private static final String ADMIN = "ADMIN";
 
     private final JwtFilter filter;
     private final DaoAuthenticationProvider provider;
@@ -54,17 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Our public endpoints
-                .antMatchers("/users//registration").permitAll()
-                .antMatchers("/users/login").permitAll()
-                .antMatchers("/users/test").authenticated()
-                //.antMatchers("/login/**").authenticated()
-                //.and()
-                //перенаправление на стандартную страницу спринга для аутентификации
-                //.formLogin()
-                //перенаправление на страницу свою для аутентификации
-                //.loginProcessingUrl("/login")
-                //.antMatchers("/admin/**").hasAnyRole("ADMIN")
-                // Our private endpoints
+                .antMatchers(PUBLIC_REGISTRATION).permitAll()
+                .antMatchers(PUBLIC_LOGIN).permitAll()
+                .antMatchers(AUTHENTICATED).authenticated()
+                .antMatchers(AUTH_ADMIN).hasAuthority(ADMIN)
                 .anyRequest().authenticated();
 
         // Add JWT token filter

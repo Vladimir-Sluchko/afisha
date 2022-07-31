@@ -1,12 +1,10 @@
 package by.itacademy.classifier_service.service;
 
-import by.itacademy.classifier_service.dao.api.ICategoryDao;
+import by.itacademy.classifier_service.dao.api.CategoryRepository;
 import by.itacademy.classifier_service.dao.entity.Category;
-import by.itacademy.classifier_service.dao.entity.Country;
 import by.itacademy.classifier_service.service.api.ICategoryService;
 import by.itacademy.classifier_service.service.dto.CategoryCreateDto;
 import by.itacademy.classifier_service.service.dto.CategoryReadDto;
-import by.itacademy.classifier_service.service.dto.CountryReadDto;
 import by.itacademy.classifier_service.service.dto.PageDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +15,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class CategoryService implements ICategoryService {
-    private final ICategoryDao repository;
+    private final CategoryRepository repository;
     private final ModelMapper mapper;
 
     @Autowired
-    public CategoryService(ICategoryDao repository, ModelMapper mapper) {
+    public CategoryService(CategoryRepository repository, ModelMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
@@ -35,9 +34,10 @@ public class CategoryService implements ICategoryService {
     @Override
     public CategoryCreateDto create(CategoryCreateDto dto) {
         Category entity = mapper.map(dto,Category.class);
+        LocalDateTime localDateTime = LocalDateTime.now();
         entity.setUuid(UUID.randomUUID());
-        entity.setDtCreate(LocalDateTime.now());
-        entity.setDtUpdate(LocalDateTime.now());
+        entity.setDtCreate(localDateTime);
+        entity.setDtUpdate(localDateTime);
         repository.save(entity);
         return dto;
     }

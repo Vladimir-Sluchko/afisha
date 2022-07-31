@@ -3,13 +3,17 @@ package by.itacademy.afisha.service.dto;
 import by.itacademy.afisha.dao.entity.enums.Status;
 import by.itacademy.afisha.dao.entity.enums.Type;
 
+import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public class ConcertCreateDto {
+    @NotBlank(message = "Enter title")
     private String title;
+    @NotBlank(message = "Enter description")
     private String description;
     private Long dtEvent;
     private Long dtEndOfSale;
+    @NotBlank(message = "Enter type")
     private Type type;
     private Status status;
     private UUID category;

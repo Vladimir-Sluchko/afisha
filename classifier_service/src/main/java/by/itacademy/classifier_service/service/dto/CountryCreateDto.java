@@ -3,16 +3,17 @@ package by.itacademy.classifier_service.service.dto;
 import com.sun.istack.NotNull;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 public class CountryCreateDto {
+    @NotBlank(message = "Enter title")
     private String title;
+    @NotBlank(message = "Enter description")
     private String description;
 
     public CountryCreateDto() {
     }
 
-    @NotBlank
+
     public String getTitle() {
         return title;
     }
@@ -22,7 +23,7 @@ public class CountryCreateDto {
         this.title = title;
     }
 
-    @NotBlank
+
     public String getDescription() {
         return description;
     }

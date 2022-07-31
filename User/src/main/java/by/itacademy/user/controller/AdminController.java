@@ -1,15 +1,26 @@
 package by.itacademy.user.controller;
 
-//@Controller
-//@RequestMapping("/users")
-public class AdminController {
-    /*private final IServiceUsers service;
+import by.itacademy.user.service.api.IAdminService;
+import by.itacademy.user.service.dto.PageDto;
+import by.itacademy.user.service.dto.CreatUserDto;
+import by.itacademy.user.service.dto.UserReadDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-    public UserController(IServiceUsers service) {
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/users")
+public class AdminController {
+    private final IAdminService service;
+
+    public AdminController(IAdminService service) {
         this.service = service;
     }
-    @PostMapping("/registration")
-    public ResponseEntity<UserCreatDto> create (@RequestBody UserCreatDto dto){
+
+    @PostMapping
+    public ResponseEntity<CreatUserDto> create (@RequestBody CreatUserDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
@@ -20,14 +31,15 @@ public class AdminController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<UserReadDto> get (@PathVariable UUID uuid){
+    public ResponseEntity<UserReadDto> getUser(@PathVariable UUID uuid){
         return ResponseEntity.ok(service.get(uuid));
     }
+
     @PutMapping("{uuid}/dt_update/{dt_update}")
-    public ResponseEntity<UserCreatDto> update (@RequestBody UserCreatDto dto,
+    public ResponseEntity<CreatUserDto> update (@RequestBody CreatUserDto dto,
                                                 @PathVariable UUID uuid,
                                                 @PathVariable(name = "dt_update") Long dtUpdate){
         return ResponseEntity.ok(service.update(dto,uuid,dtUpdate));
-    }*/
+    }
 
 }

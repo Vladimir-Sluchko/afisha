@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "country", schema = "afisha_test")
+@Table(name = "country", schema = "library")
 public class Country {
 
     private UUID uuid;
@@ -24,23 +24,19 @@ public class Country {
         return uuid;
     }
 
-    @NotNull
     public LocalDateTime getDtCreate() {
         return dtCreate;
     }
 
     @Version
-    @NotNull
     public LocalDateTime getDtUpdate() {
         return dtUpdate;
     }
 
-    @NotNull
     public String getTitle() {
         return title;
     }
 
-    @NotNull
     public String getDescription() {
         return description;
     }

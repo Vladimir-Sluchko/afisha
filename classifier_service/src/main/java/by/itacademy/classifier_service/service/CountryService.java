@@ -1,6 +1,6 @@
 package by.itacademy.classifier_service.service;
 
-import by.itacademy.classifier_service.dao.api.ICountryDao;
+import by.itacademy.classifier_service.dao.api.CountryRepository;
 import by.itacademy.classifier_service.dao.entity.Country;
 import by.itacademy.classifier_service.service.api.ICountryService;
 import by.itacademy.classifier_service.service.dto.CountryCreateDto;
@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class CountryService implements ICountryService {
-    private final ICountryDao repository;
+    private final CountryRepository repository;
     private final ModelMapper mapper;
 
     @Autowired
-    public CountryService(ICountryDao repository, ModelMapper mapper) {
+    public CountryService(CountryRepository repository, ModelMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
@@ -33,9 +33,10 @@ public class CountryService implements ICountryService {
     @Override
     public CountryCreateDto create(CountryCreateDto dto) {
         Country entity = mapper.map(dto, Country.class);
+        LocalDateTime localDateTime = LocalDateTime.now();
         entity.setUuid(UUID.randomUUID());
-        entity.setDtCreate(LocalDateTime.now());
-        entity.setDtUpdate(LocalDateTime.now());
+        entity.setDtCreate(localDateTime);
+        entity.setDtUpdate(localDateTime);
         repository.save(entity);
         return dto;
     }

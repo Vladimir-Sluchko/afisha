@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "roles", schema = "new")
+@Table(name = "roles", schema = "security")
 public class Role implements GrantedAuthority {
 
     private UUID uuid;
@@ -39,4 +39,5 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return roleName;
     }
+
 }
