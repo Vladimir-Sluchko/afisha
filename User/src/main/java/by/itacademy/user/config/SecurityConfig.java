@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String PUBLIC_REGISTRATION = "/users/registration";
-    private static final String PUBLIC_LOGIN = "/users/login";
-    private static final String AUTHENTICATED = "/users/me";
-    private static final String AUTH_ADMIN = "/users/**";
+    private static final String PUBLIC_REGISTRATION = "/api/v1/users/registration";
+    private static final String PUBLIC_LOGIN = "/api/v1/users/login";
+    private static final String AUTHENTICATED = "/api/v1/users/me";
+    private static final String AUTH_ADMIN = "/api/v1/users/**";
     private static final String ADMIN = "ADMIN";
 
     private final JwtFilter filter;

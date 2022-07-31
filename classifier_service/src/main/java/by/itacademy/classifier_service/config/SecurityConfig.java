@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String URL_COUNTRY = "/classifier/country";
-    private static final String URL_CONCERT = "/classifier/concert/category";
-    private static final String CHECK_CATEGORY_FOR_CLASSIFIER_CLIENT = "/classifier/concert/check/**";
-    private static final String CHECK_COUNTRY_FOR_CLASSIFIER_CLIENT = "/classifier/country/check/**";
+    private static final String URL_COUNTRY = "/api/v1/classifier/country";
+    private static final String URL_CONCERT = "/api/v1/classifier/concert/category";
+    private static final String CHECK_CATEGORY_FOR_CLASSIFIER_CLIENT = "/api/v1/classifier/concert/check/**";
+    private static final String CHECK_COUNTRY_FOR_CLASSIFIER_CLIENT = "/api/v1/classifier/country/check/**";
     private static final String ADMIN = "ADMIN";
 
     private final JwtFilter filter;

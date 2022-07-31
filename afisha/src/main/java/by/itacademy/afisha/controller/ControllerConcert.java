@@ -10,11 +10,8 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/CONCERTS")
+@RequestMapping("/api/v1/afisha/event/concerts")
 public class ControllerConcert {
-    {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    }
     private final IConcertService service;
 
     public ControllerConcert(IConcertService service) {

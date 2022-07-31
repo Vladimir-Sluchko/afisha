@@ -13,11 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String URL_COUNTRY = "/classifier/country";
-    private static final String URL_CONCERT = "/classifier/concert/category";
-    private static final String CHECK_CATEGORY_FOR_CLASSIFIER_CLIENT = "/classifier/concert/check/**";
-    private static final String CHECK_COUNTRY_FOR_CLASSIFIER_CLIENT = "/classifier/country/check/**";
-    private static final String ADMIN = "ADMIN";
+    private static final String URL_EVENT = "/api/v1/afisha/event/**";
 
     private final JwtFilter filter;
     //private final DaoAuthenticationProvider provider;
@@ -54,12 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Our public endpoints
-                .antMatchers(HttpMethod.GET,CHECK_COUNTRY_FOR_CLASSIFIER_CLIENT).permitAll()
-                .antMatchers(HttpMethod.GET,CHECK_CATEGORY_FOR_CLASSIFIER_CLIENT).permitAll()
-                .antMatchers(HttpMethod.POST,URL_COUNTRY).hasAuthority(ADMIN)
-                .antMatchers(HttpMethod.GET,URL_COUNTRY).permitAll()
-                .antMatchers(HttpMethod.POST,URL_CONCERT).hasAuthority(ADMIN)
-                .antMatchers(HttpMethod.GET,URL_CONCERT).permitAll()
+                .antMatchers(HttpMethod.GET,URL_EVENT).permitAll()
+                .antMatchers(HttpMethod.POST,URL_EVENT).authenticated()
+                .antMatchers(HttpMethod.PUT,URL_EVENT).authenticated()
                 .anyRequest().authenticated();
 
         // Add JWT token filter

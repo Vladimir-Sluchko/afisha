@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/classifier")
+@RequestMapping("/api/v1/classifier")
 public class ControllerCategory {
     private final ICategoryService service;
 

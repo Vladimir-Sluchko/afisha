@@ -3,20 +3,30 @@ package by.itacademy.afisha.service.dto;
 import by.itacademy.afisha.dao.entity.enums.Status;
 import by.itacademy.afisha.dao.entity.enums.Type;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class FilmCreateDto {
+    @NotBlank(message = "Enter title")
     private String title;
+    @NotBlank(message = "Enter description")
     private String description;
     private Long dtEvent;
     private Long dtEndOfSale;
+    @NotBlank(message = "Enter type")
     private Type type;
+    @NotBlank(message = "Enter status")
     private Status status;
     private UUID country;
+    @NotBlank(message = "Enter releaseYear")
     private Integer releaseYear;
+    @NotBlank(message = "Enter releaseDate")
     private LocalDate releaseDate;
+    @NotBlank(message = "Enter releaseDate")
+    @PositiveOrZero
     private Integer duration;
 
     public FilmCreateDto() {

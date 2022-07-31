@@ -15,6 +15,7 @@ public class ConcertCreateDto {
     private Long dtEndOfSale;
     @NotBlank(message = "Enter type")
     private Type type;
+    @NotBlank(message = "Enter status")
     private Status status;
     private UUID category;
 

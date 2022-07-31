@@ -13,11 +13,8 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/FILMS")
+@RequestMapping("/api/v1/afisha/event/films")
 public class ControllerFilms {
-    {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    }
     private final IFilmService eventFilmService;
 
     public ControllerFilms(IFilmService eventFilmService) {
