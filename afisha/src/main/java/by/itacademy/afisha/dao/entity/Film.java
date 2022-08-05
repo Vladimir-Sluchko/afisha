@@ -24,22 +24,22 @@ public class Film extends Event{
     public Film() {
     }
 
-    @Column(table = "films")
+    @Column(table = "films",name = "country")
     public UUID getCountry() {
         return country;
     }
 
-    @Column(table = "films")
+    @Column(table = "films",name = "release_year")
     public Integer getReleaseYear() {
         return releaseYear;
     }
 
-    @Column(table = "films")
+    @Column(table = "films",name = "release_date")
     public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    @Column(table = "films")
+    @Column(table = "films",name = "duration")
     public Integer getDuration() {
         return duration;
     }

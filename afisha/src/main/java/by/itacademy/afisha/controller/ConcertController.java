@@ -6,27 +6,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.TimeZone;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/afisha/event/concerts")
-public class ControllerConcert {
+public class ConcertController {
     private final IConcertService service;
 
-    public ControllerConcert(IConcertService service) {
+    public ConcertController(IConcertService service) {
         this.service = service;
     }
 
 
     @PostMapping
-//    @RequestMapping(method = RequestMethod.POST) //аналог @PostMapping
     public ResponseEntity<ConcertCreateDto> create(@RequestBody ConcertCreateDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
     @GetMapping
-    //FILMS?page=1&size=20'
     public ResponseEntity<PageDto> getAll(@RequestParam(name = "size", defaultValue = "5") int size,
                                           @RequestParam(name = "page", defaultValue = "1") int page){
         return ResponseEntity.ok(service.getAll(page,size));
@@ -34,7 +31,6 @@ public class ControllerConcert {
     }
 
     @GetMapping("/{uuid}")
-//    @RequestMapping(value = "/{id}", method = RequestMethod.GET) //аналог @GetMapping
     public ResponseEntity<ConcertReadDto> get(@PathVariable UUID uuid){
         return ResponseEntity.ok(service.get(uuid));
     }

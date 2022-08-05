@@ -10,15 +10,15 @@ import java.util.UUID;
 
 
 public interface IFilmService extends IService<FilmCreateDto, FilmReadDto> {
-    @Override
+    //@Override
     FilmCreateDto create(FilmCreateDto eventFilm);
 
-    @Override
+    //@Override
     FilmReadDto get(UUID uuid);
 
-    @Override
+    //@Override
     PageDto<FilmReadDto> getAll(int page, int size);
 
-    @Override
+    //@Override
     FilmCreateDto update (FilmCreateDto eventFilm, UUID uuid, Long dtUpdate);
 }

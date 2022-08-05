@@ -24,60 +24,73 @@ public class Event {
     private Long dtEndOfSale;
     private Type type;
     private Status status;
+    private String author;
 
     public Event() {
     }
 
 
     @Id
+    @Column(name = "uuid")
     public UUID getUuid() {
         return uuid;
     }
-
+    @Column(name = "dt_create")
     public LocalDateTime getDtCreate() {
         return dtCreate;
     }
 
-    //@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    //@JsonSerialize(using = LocalDateTimeSerializer.class)
+    @Column(name = "dt_update")
     @Version
     public LocalDateTime getDtUpdate() {
         return dtUpdate;
     }
 
-
+    @Column(name = "title")
     public String getTitle() {
         return title;
     }
 
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
 
+    @Column(name = "dt_event")
     public Long getDtEvent() {
         return dtEvent;
     }
 
+    @Column(name = "dt_end_of_sale")
     public Long getDtEndOfSale() {
         return dtEndOfSale;
     }
 
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
     public Type getType() {
         return type;
     }
 
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     public Status getStatus() {
         return status;
+    }
+
+    @Column(name = "author")
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
 
-    //@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    //@JsonSerialize(using = LocalDateTimeSerializer.class)
     public void setDtCreate(LocalDateTime dtCreate) {
         this.dtCreate = dtCreate;
     }
@@ -109,4 +122,6 @@ public class Event {
     public void setStatus(Status status) {
         this.status = status;
     }
+
 }
+

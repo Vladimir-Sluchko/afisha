@@ -1,8 +1,12 @@
 package by.itacademy.afisha.service;
 
 import by.itacademy.afisha.dao.api.IFilmDao;
+import by.itacademy.afisha.dao.entity.Concert;
 import by.itacademy.afisha.dao.entity.Film;
+import by.itacademy.afisha.dao.entity.enums.Status;
 import by.itacademy.afisha.dao.entity.enums.Type;
+import by.itacademy.afisha.service.componets.UserHolder;
+import by.itacademy.afisha.service.dto.ConcertReadDto;
 import by.itacademy.afisha.service.dto.FilmCreateDto;
 import by.itacademy.afisha.service.dto.FilmReadDto;
 import by.itacademy.afisha.service.api.IFilmService;
@@ -23,16 +27,18 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class EventFilmService implements IFilmService {
+public class FilmService implements IFilmService {
     private final IFilmDao repository;
     private final ModelMapper mapper;
     private final ClassifierClient checkUuid;
+    private final UserHolder holder;
 
     @Autowired
-    public EventFilmService(IFilmDao eventFilmDao, RestTemplate restTemplate, ModelMapper mapper, ClassifierClient checkUuid) {
+    public FilmService(IFilmDao eventFilmDao, RestTemplate restTemplate, ModelMapper mapper, ClassifierClient checkUuid, UserHolder holder) {
         this.repository = eventFilmDao;
         this.checkUuid = checkUuid;
         this.mapper = mapper;
+        this.holder = holder;
     }
 
     @Override
@@ -43,6 +49,7 @@ public class EventFilmService implements IFilmService {
             entity.setUuid(UUID.randomUUID());
             entity.setDtCreate(LocalDateTime.now());
             entity.setDtUpdate(LocalDateTime.now());
+            entity.setAuthor(holder.getUser().getUsername());
             repository.save(entity);
         }
 
@@ -51,14 +58,34 @@ public class EventFilmService implements IFilmService {
 
     @Override
     public PageDto<FilmReadDto> getAll(int page, int size ) {
-        List<Film> listEntity = repository.findByType(Type.FILMS);
+        Pageable pageRequest = PageRequest.of(--page,size);
+        Page<Film> pageEntity;
+
+        if(holder.getUser().getUsername() == null){
+            pageEntity = repository.findByTypeAndStatus(Type.CONCERTS, Status.PUBLISHED,pageRequest);
+        } else if (!holder.getUser().getAuthorities()
+                .stream()
+                .filter(role -> "ADMIN".equals(role.getAuthority()))
+                .findAny().isEmpty()){
+            pageEntity = repository.findByType(Type.CONCERTS,pageRequest);
+        } else pageEntity = repository
+                .findByTypeAndStatusIsOrAuthorIs(Type.CONCERTS, Status.PUBLISHED, holder.getUser().getUsername(), pageRequest);
+
+        List<FilmReadDto> listDto = pageEntity
+                .getContent().stream().map(element -> mapper.map(element, FilmReadDto.class))
+                .collect(Collectors.toList());
+
+        Page<FilmReadDto> pageConcert = new PageImpl<>(listDto, pageRequest, pageEntity.getTotalElements());
+        return mapper.map(pageConcert,PageDto.class);
+
+        /*List<Film> listEntity = repository.findByType(Type.FILMS);
         List<FilmReadDto> listDto = listEntity.stream()
                 .map(element -> mapper.map(element, FilmReadDto.class))
                 .collect(Collectors.toList());
         Pageable pageRequest = PageRequest.of(--page,size);
         Page<Film> entities = repository.findByType(Type.FILMS,pageRequest);
         Page<FilmReadDto> filmReadDto = new PageImpl<>(listDto, pageRequest, entities.getTotalElements());
-        return mapper.map(filmReadDto, PageDto.class);
+        return mapper.map(filmReadDto, PageDto.class);*/
     }
 
     @Override

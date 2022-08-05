@@ -19,12 +19,13 @@ public class ConcertCreateDto {
     private Status status;
     private UUID category;
 
+
     public ConcertCreateDto() {
     }
 
-    public ConcertCreateDto(String title, String description, Long dtEvent,
-                            Long dtEndOfSale, Type type, Status status, UUID category) {
-
+    public ConcertCreateDto(String title, String description,
+                            Long dtEvent, Long dtEndOfSale,
+                            Type type, Status status, UUID category) {
         this.title = title;
         this.description = description;
         this.dtEvent = dtEvent;
@@ -33,7 +34,6 @@ public class ConcertCreateDto {
         this.status = status;
         this.category = category;
     }
-
 
     public String getTitle() {
         return title;
@@ -63,6 +63,7 @@ public class ConcertCreateDto {
         return category;
     }
 
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -91,6 +92,7 @@ public class ConcertCreateDto {
         this.category = category;
     }
 
+
     public static final class Builder {
 
         private String title;
@@ -100,6 +102,7 @@ public class ConcertCreateDto {
         private Type type;
         private Status status;
         private UUID category;
+
 
         public Builder() {
         }
@@ -139,6 +142,7 @@ public class ConcertCreateDto {
             this.category = category;
             return this;
         }
+
 
         public static Builder create(){
             return new Builder();

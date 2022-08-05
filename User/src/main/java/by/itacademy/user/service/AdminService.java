@@ -22,13 +22,13 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class AdminCabinetService implements IAdminService {
+public class AdminService implements IAdminService {
     private final UserRepository repository;
     private final ModelMapper mapper;
     private final ConversionService conversionService;
 
 
-    public AdminCabinetService(UserRepository repository, ModelMapper mapper, ConversionService conversionService) {
+    public AdminService(UserRepository repository, ModelMapper mapper, ConversionService conversionService) {
         this.repository = repository;
         this.mapper = mapper;
         this.conversionService = conversionService;

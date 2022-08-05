@@ -16,7 +16,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String URL_EVENT = "/api/v1/afisha/event/**";
 
     private final JwtFilter filter;
-    //private final DaoAuthenticationProvider provider;
 
     public SecurityConfig(JwtFilter filter) {
         this.filter = filter;
