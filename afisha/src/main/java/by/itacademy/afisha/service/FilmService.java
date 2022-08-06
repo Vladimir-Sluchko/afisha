@@ -16,9 +16,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.OptimisticLockException;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -27,6 +29,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class FilmService implements IFilmService {
     private final IFilmDao repository;
     private final ModelMapper mapper;
@@ -42,15 +45,17 @@ public class FilmService implements IFilmService {
     }
 
     @Override
+    @Transactional
     public FilmCreateDto create(FilmCreateDto eventFilm) {
-        boolean check = checkUuid.isCheckUuid(eventFilm.getCountry(),"country");
-        if(check){
+        if(checkUuid.isCheckUuidCountry(eventFilm.getCountry())){
             Film entity = mapper.map(eventFilm, Film.class);
             entity.setUuid(UUID.randomUUID());
             entity.setDtCreate(LocalDateTime.now());
             entity.setDtUpdate(LocalDateTime.now());
             entity.setAuthor(holder.getUser().getUsername());
             repository.save(entity);
+        }else {
+            throw new OptimisticLockException("There is no such county in the directory");
         }
 
         return eventFilm;
@@ -77,26 +82,22 @@ public class FilmService implements IFilmService {
 
         Page<FilmReadDto> pageConcert = new PageImpl<>(listDto, pageRequest, pageEntity.getTotalElements());
         return mapper.map(pageConcert,PageDto.class);
-
-        /*List<Film> listEntity = repository.findByType(Type.FILMS);
-        List<FilmReadDto> listDto = listEntity.stream()
-                .map(element -> mapper.map(element, FilmReadDto.class))
-                .collect(Collectors.toList());
-        Pageable pageRequest = PageRequest.of(--page,size);
-        Page<Film> entities = repository.findByType(Type.FILMS,pageRequest);
-        Page<FilmReadDto> filmReadDto = new PageImpl<>(listDto, pageRequest, entities.getTotalElements());
-        return mapper.map(filmReadDto, PageDto.class);*/
     }
 
     @Override
+    @Transactional
     public FilmCreateDto update(FilmCreateDto eventFilm, UUID uuid, Long dtUpdate) {
         LocalDateTime dateUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
-        Film film = repository.findById(uuid).orElseThrow(()-> {
-            throw new IllegalArgumentException("Нет такого фильма");
-        });
-        boolean check = checkUuid.isCheckUuidCountry(eventFilm.getCountry());
 
-        if (film.getDtUpdate().equals(dateUpdate) && check) {
+        Film film = repository.findByUuidAndAuthor(uuid,holder.getUser().getUsername()).orElseThrow(()-> {
+            throw new IllegalArgumentException("You cannot edit this post");
+        });
+
+        if (!checkUuid.isCheckUuidCategory(eventFilm.getCountry())){
+            throw new OptimisticLockException("There is no such country in the directory");
+        }
+
+        if (film.getDtUpdate().equals(dateUpdate)) {
             film.setTitle(eventFilm.getTitle());
             film.setDescription(eventFilm.getDescription());
             film.setDtEvent(eventFilm.getDtEvent());
@@ -123,8 +124,11 @@ public class FilmService implements IFilmService {
         }
          Film film = repository.findById(uuid).
                  orElseThrow(()-> {
-                     throw new IllegalArgumentException("Нет такого фильма");
+                     throw new IllegalArgumentException("No content");
                  });
+        if(!film.getAuthor().equals(holder.getUser().getUsername()) && film.getStatus() == Status.DRAFT){
+            throw new OptimisticLockException("You can't view the event, it hasn't been published yet");
+        }
         return mapper.map(film,FilmReadDto.class);
     }
 

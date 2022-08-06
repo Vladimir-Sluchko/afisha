@@ -16,6 +16,8 @@ public class ConcertReadDto {
     private Long dtEndOfSale;
     private Type type;
     private Status status;
+    private String author;
+
 
 
     public ConcertReadDto() {
@@ -24,7 +26,7 @@ public class ConcertReadDto {
     public ConcertReadDto(UUID uuid, LocalDateTime dtCreate,
                           LocalDateTime dtUpdate, String title,
                           String description, Long dtEvent, Long dtEndOfSale,
-                          Type type, Status status) {
+                          Type type, Status status,String author) {
         this.uuid = uuid;
         this.dtCreate = dtCreate;
         this.dtUpdate = dtUpdate;
@@ -34,6 +36,7 @@ public class ConcertReadDto {
         this.dtEndOfSale = dtEndOfSale;
         this.type = type;
         this.status = status;
+        this.author = author;
     }
 
     public UUID getUuid() {
@@ -72,7 +75,9 @@ public class ConcertReadDto {
         return status;
     }
 
-
+    public String getAuthor() {
+        return author;
+    }
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
@@ -110,6 +115,9 @@ public class ConcertReadDto {
         this.status = status;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public static final class Builder {
 
@@ -122,6 +130,7 @@ public class ConcertReadDto {
         private Long dtEndOfSale;
         private Type type;
         private Status status;
+        private String author;
 
         public Builder() {
         }
@@ -170,6 +179,10 @@ public class ConcertReadDto {
             this.status = status;
             return this;
         }
+        public Builder setAuthor(String author){
+            this.author = author;
+            return this;
+        }
 
         public static Builder create(){
             return new Builder();
@@ -178,7 +191,7 @@ public class ConcertReadDto {
         public ConcertReadDto build(){
             return new ConcertReadDto(uuid, dtCreate, dtUpdate,
                     title, description, dtEvent,
-                    dtEndOfSale, type, status);
+                    dtEndOfSale, type, status, author);
         }
     }
 }

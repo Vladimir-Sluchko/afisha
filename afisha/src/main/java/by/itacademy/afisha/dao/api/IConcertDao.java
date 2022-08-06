@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -18,4 +19,7 @@ public interface IConcertDao extends JpaRepository<Concert, UUID> {
     Page<Concert> findByType(Type type, Pageable pageable);
 
     Page<Concert> findByTypeAndStatusIsOrAuthorIs(Type type,Status status,String author,Pageable pageable);
+
+    Optional<Concert> findByUuidAndAuthor(UUID uuid,String author);
+    //boolean existByAuthorIsOrUuidIs(String author,UUID uuid);
 }

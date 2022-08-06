@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.OptimisticLockException;
 import java.time.Instant;
@@ -29,6 +30,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class ConcertService implements IConcertService {
     private final IConcertDao repository;
     private final ClassifierClient checkUuid;
@@ -45,16 +47,17 @@ public class ConcertService implements IConcertService {
     }
 
     @Override
+    @Transactional
     public ConcertCreateDto create(ConcertCreateDto eventConcert) {
-        holder.getUser().getUsername();
-        boolean check = checkUuid.isCheckUuid(eventConcert.getCategory(),"category");
-        if (check){
+        if (checkUuid.isCheckUuidCategory(eventConcert.getCategory())){
             Concert entity = mapper.map(eventConcert,Concert.class);
             entity.setUuid(UUID.randomUUID());
             entity.setDtCreate(LocalDateTime.now());
             entity.setDtUpdate(LocalDateTime.now());
             entity.setAuthor(holder.getUser().getUsername());
             repository.save(entity);
+        }else {
+            throw new OptimisticLockException("There is no such category in the directory");
         }
         return eventConcert;
     }
@@ -66,8 +69,11 @@ public class ConcertService implements IConcertService {
         }
         Concert concert = repository.findById(uuid).
                 orElseThrow(()-> {
-                    throw new IllegalArgumentException("Нет такого фильма");
+                    throw new IllegalArgumentException("No content");
                 });
+        if(!concert.getAuthor().equals(holder.getUser().getUsername()) && concert.getStatus() == Status.DRAFT){
+            throw new OptimisticLockException("You can't view the event, it hasn't been published yet");
+        }
         return mapper.map(concert,ConcertReadDto.class);
     }
 
@@ -95,13 +101,19 @@ public class ConcertService implements IConcertService {
     }
 
     @Override
+    @Transactional
     public ConcertCreateDto update(ConcertCreateDto eventConcert, UUID uuid, Long dtUpdate) {
         LocalDateTime dateUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
-        Concert concert = repository.findById(uuid).orElseThrow(()-> {
-            throw new IllegalArgumentException("Нет такого концерта");
+
+        Concert concert = repository.findByUuidAndAuthor(uuid,holder.getUser().getUsername()).orElseThrow(()-> {
+            throw new IllegalArgumentException("You cannot edit this post");
         });
-        boolean check = checkUuid.isCheckUuid(eventConcert.getCategory(),"category");
-        if (concert.getDtUpdate().equals(dateUpdate) && check) {
+
+        if (!checkUuid.isCheckUuidCategory(eventConcert.getCategory())){
+            throw new OptimisticLockException("There is no such category in the directory");
+        }
+
+        if (concert.getDtUpdate().equals(dateUpdate)) {
             concert.setTitle(eventConcert.getTitle());
             concert.setDescription(eventConcert.getDescription());
             concert.setDtEvent(eventConcert.getDtEvent());
